@@ -1894,11 +1894,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		endif;
 	
 		
-	} // BANKA BİLGİLERİ GÜNCELLE
-		
-	
-	
-	
+	} // BANKA BİLGİLERİ GÜNCELLE	
 		
 	function bankaSil($id) {
 	
@@ -1925,8 +1921,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 
 	
 		
-	}  // BANKA BİLGİLERİ SİL	
-		
+	}  // BANKA BİLGİLERİ SİL			
 	
 	function bankaEkle($islem) {
 		

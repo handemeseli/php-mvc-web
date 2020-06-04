@@ -149,135 +149,67 @@
 
 	<div class="container" id="sipTamamlaİskelet" >
     
-    	<div class="row">
+    	<div class="row" id="tamamlandi">
         
-        		<div class="col-md-7" id="soltaraf">
-                	<div class="row">
-                    
-                    	<div class="col-md-6">
-                        	<div class="row" id="uyelik">
-                            	<div class="col-md-12"><h4>ÜYELİK BİLGİLERİ</h4></div>
-<form method='POST' action='http://localhost/PROJELER/mvcproje/uye/siparisTamamlandi' >                                
-                                
-                                                                <div class="col-md-3" id="label">Ad</div>
-                           		 <div class="col-md-9" id="input"><input type='text' id='sipAd' name='ad' value='sena' class='form-control' ></div>
-                                 <div class="col-md-3" id="label">Soyad</div>
-                           		 <div class="col-md-9" id="input"><input type='text' id='sipSoyad' name='soyad' value='karaaslan' class='form-control' ></div>
-                                 
-                                       <div class="col-md-3" id="label">Mail</div>
-                           		 <div class="col-md-9" id="input"><input type='text' id='sipMail' name='mail' value='senakrsln44@gmail.com' class='form-control' ></div>
-                                 <div class="col-md-3" id="label">Telefon</div>
-                           		 <div class="col-md-9" id="input"><input type='text' id='sipTlf' name='telefon' value='05555474142' class='form-control' ></div>
-                                 
-           
-           
-           
-           <div class="col-md-12" id="radioBtn"><input type='radio' name='bilgiTercih' checked='checked' value='0' > Üyelik Bilgilerimi Kullan</div>
-           
-             <div class="col-md-12" id="radioBtn"><input type='radio' name='bilgiTercih' value='1' > Farklı Bilgiler Kullan</div>
-                           	
-           
-                                 
-                            
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="col-md-6">
-                        <div class="row" id="uyelik">
-                            	<div class="col-md-12"><h4>ADRESLER</h4></div>
-                                
-                               
-                                
-                                                                 
-                            
-                            </div>
-                        
-                        </div>
-                        
-                    <div class="col-md-12">
-                    
-                      <div class="row" id="uyelik">
-                            	<div class="col-md-12"><h4>ÖDEME YÖNTEMİ</h4></div>
-                                
-                           <div class="col-md-6" id="adresSatir">
-                                
-                               <label>
-  <input type='radio' value='1' name='odeme' checked='checked' > HAVALE / EFT
-                               </label>
-                            
-                            </div>
-                            
-                             <div class="col-md-6" id="adresSatir">
-                                
-                                                   <label>
-  <input type='radio' disabled='disabled' > KREDİ KARTI (Yakında)
-                               </label>
-                               
-                               
-                               
-                                
-                                </div>
-                            
-                            </div>
-                    
-                    
-                    </div>
-                    
-                    </div>
-                
-                
-                
-                </div>
-                
-                
-                
-                <div class="col-md-5">
-                		
-                        <div class="row" id="sagtaraf">
-                        
-                    	<div class="col-md-12" id="baslik"><h3>SEPETTEKİ ÜRÜNLERİNİZ</h3></div>
-                        <div class="col-md-3" id="icbaslik">Ürün Ad</div>
-                        <div class="col-md-3" id="icbaslik">Adet</div>
-                        <div class="col-md-3" id="icbaslik">Birim Fiyat</div>
-                        <div class="col-md-3" id="icbaslik">Toplam</div>
-                        <!-- SEPETTEKİ ÜRÜNLER BURADA LİSTELENECEK -->
-                        <div class="col-md-3" id="icurunler">Y MODEL</div>
-                        <div class="col-md-3" id="icurunler">1</div>
-                        <div class="col-md-3" id="icurunler">169.00</div>
-                        <div class="col-md-3" id="icurunler">169,00</div>  <div class="col-md-3" id="icurunler">3-6 Yaş</div>
-                        <div class="col-md-3" id="icurunler">4</div>
-                        <div class="col-md-3" id="icurunler">169.00</div>
-                        <div class="col-md-3" id="icurunler">676,00</div><div class="col-md-3" id="toplam">Toplam Adet</div>
-                        <div class="col-md-3" id="toplam">5</div>
-                        <div class="col-md-3" id="toplam">Toplam Tutar</div>
-                        <div class="col-md-3" id="toplam">845,00</div>      
-                        
-                        
-                        </div>
-                        
-                        <div class="row">
-                        
-                        				
-			<div class="col-md-12">
-<input type='hidden' value='845' name='toplam' ><input type='submit' value='TAMAMLA' class='btn btn_1' ></form> <div class="alert alert-danger mt-2 pt-3 text-center" >Bilgiler eksiksiz doldurulmalıdır</div>            
-            
-			</div>			
-						
-                        
-                        
-                        </div>
-                        
-                        
-                
-                </div>
-                
-                
+        <div class="col-md-12">
         
         
         
-        	
+        
+        <h3 class="alert alert-success">TEŞEKKÜRLER Siparişiniz başarıyla oluşturulmuştur</h3>
+        
+        <p class="sipno">Sipariş Numaranız : 
+		98006076<br />Ödenecek Tutar : 
+            169,00 TL            
+            </p>
+          <p>Siparişinizi numaranız ile takip edebilirsiniz. Siparişlerinizin kargoya verilebilmesi için aşağıda bulunan hesap numaralarımıza 3 (üç) iş günü içerisinde ödeme yapmanız ve açıklama kısmına sipariş numaranızı yazmanız gerekmektedir. Belirtilen süre içerisinde ödemesi yapılmayan siparişler sistem tarafından otomatik iptal edilecektir.</p>
+        		
 
+        </div>
+        
+        
+        
+                  <div class="col-md-12" id="bankalarinAnasi">
+                  		<div class="row">
+                        <div class="col-md-4" id="Bankcerceve">
+                                  			<div class="row" >
+                                            		<div class="col-md-12" id="Bankbaslik">İŞ BANKASI</div>
+                                            <div class="col-md-3">Hesap Adı</div> 
+                                                    <div class="col-md-9">OLCİ-İŞ BANKASI</div>
+											<div class="col-md-3">Hesap No</div> 
+                                                    <div class="col-md-9">5645654</div>
+                                            <div class="col-md-3">İBAN</div> 
+                                                    <div class="col-md-9">TR00 0000 0000 0000 0000 0000 14</div>      
+                                            </div>
+                                  </div><div class="col-md-4" id="Bankcerceve">
+                                  			<div class="row" >
+                                            		<div class="col-md-12" id="Bankbaslik">AKBANK</div>
+                                            <div class="col-md-3">Hesap Adı</div> 
+                                                    <div class="col-md-9">OLCİ-AKBANK</div>
+											<div class="col-md-3">Hesap No</div> 
+                                                    <div class="col-md-9">654646</div>
+                                            <div class="col-md-3">İBAN</div> 
+                                                    <div class="col-md-9">TR00 0000 0000 0000 0000 0000 19</div>      
+                                            </div>
+                                  </div><div class="col-md-4" id="Bankcerceve">
+                                  			<div class="row" >
+                                            		<div class="col-md-12" id="Bankbaslik">GARANTİ</div>
+                                            <div class="col-md-3">Hesap Adı</div> 
+                                                    <div class="col-md-9">OLCİ-GARANTİ</div>
+											<div class="col-md-3">Hesap No</div> 
+                                                    <div class="col-md-9">451454</div>
+                                            <div class="col-md-3">İBAN</div> 
+                                                    <div class="col-md-9">TR00 0000 0000 0000 0000 0000 80</div>      
+                                            </div>
+                                  </div>	
+                        		 
+                          
+                                  
+                        
+                        </div>
+                  
+                
+                 </div>
         
         </div>
     
@@ -351,7 +283,7 @@ Modal content...
 					<ul class="f_nav">
                     
                     
-                      <li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/18/isikli">Işıklı</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/15/spor">Spor</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/3/ceket">Ceket</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/11/camasir">Çamaşır</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/10/klasik">Klasik</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/1/tisort">Tişört</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/22/bebek">Bebek</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/25/tisort">Tişört</a></li>  
+                      <li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/10/klasik">Klasik</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/6/boxer">Boxer</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/16/klasik">Klasik</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/3/ceket">Ceket</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/20/ilk-adim">İlk Adım</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/4/gomlek">Gömlek</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/17/deri-kordon">Deri Kordon</a></li><li><a href="http://localhost/PROJELER/mvcproje/urunler/kategori/22/bebek">Bebek</a></li>  
                     
 				
 					</ul>			

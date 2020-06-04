@@ -47,58 +47,27 @@
         
                   <div class="col-md-12" id="bankalarinAnasi">
                   		<div class="row">
-                        
-                        		  <div class="col-md-4" id="Bankcerceve">
-                                  
+                        <?php
+							
+							foreach ($veri["bankalar"] as $deger) :
+							
+							echo'<div class="col-md-4" id="Bankcerceve">
                                   			<div class="row" >
-                                            		<div class="col-md-12" id="Bankbaslik">İŞ BANKASI</div>
-                                                    <div class="col-md-3">Hesap Adı</div> 
-                                                    <div class="col-md-9">MVC PROJE-OLCİ</div> 
-                                               <div class="col-md-3">İBAN</div> 
-                                                    <div class="col-md-9">TR06 0000 0000 0000 0000 0000 0000  </div>      
-                                          
-                                          
-                                          
+                                            		<div class="col-md-12" id="Bankbaslik">'.$deger["banka_ad"].'</div>
+                                            <div class="col-md-3">Hesap Adı</div> 
+                                                    <div class="col-md-9">'.$deger["hesap_ad"].'</div>
+											<div class="col-md-3">Hesap No</div> 
+                                                    <div class="col-md-9">'.$deger["hesap_no"].'</div>
+                                            <div class="col-md-3">İBAN</div> 
+                                                    <div class="col-md-9">'.$deger["iban_no"].'</div>      
                                             </div>
-                                  
-                                  
-                                  		
-                                  
-                                  
-                                  
-                                  </div>
-                                  
-                                  
-                                  
-                                  <div class="col-md-4" id="Bankcerceve">
-                       			<div class="row" >
-                                            		<div class="col-md-12"  id="Bankbaslik">AKBANK</div>
-                                                    <div class="col-md-3">Hesap Adı</div> 
-                                                    <div class="col-md-9">MVC PROJE-OLCİ</div> 
-                                               <div class="col-md-3">İBAN</div> 
-                                                    <div class="col-md-9">TR06 0000 0000 0000 0000 0000 0000  </div>      
-                                          
-                                          
-                                          
-                                            </div>
-                                  
-                                  </div>
-                                  
-                                  
-                                     <div class="col-md-4" id="Bankcerceve"> 
-                               			<div class="row" >
-                                            		<div class="col-md-12"  id="Bankbaslik">GARANTİ</div>
-                                                    <div class="col-md-3">Hesap Adı</div> 
-                                                    <div class="col-md-9">MVC PROJE-OLCİ</div> 
-                                               <div class="col-md-3">İBAN</div> 
-                                                    <div class="col-md-9">TR06 0000 0000 0000 0000 0000 0000  </div>      
-                                          
-                                          
-                                          
-                                            </div>
-                                  
-                                  </div>
-                                  
+                                  </div>';
+							
+							endforeach;
+							
+						?>	
+                        		 
+                          
                                   
                         
                         </div>

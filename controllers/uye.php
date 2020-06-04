@@ -194,9 +194,7 @@ class uye extends Controller  {
 	
 		
 	} // GİRİŞ KONTROL	
-	
-	
-	
+		
 	//*********** ÜYENİN PANELİNİ SAĞLAYAN FONKSİYONLAR
 	
 	function Yorumsil () {
@@ -620,7 +618,8 @@ $GelenUrun=$this->model->VerileriAl("urunler","where id=".$id);
 		$this->view->goster("sayfalar/siparistamamlandi",
 		array(
 		"siparisno" => $siparisNo,
-		"toplamtutar" => $toplam		
+		"toplamtutar" => $toplam,
+		"bankalar" => $this->model->VerileriAl("bankabilgileri",false)
 		));	
 		
 		
