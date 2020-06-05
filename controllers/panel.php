@@ -2,6 +2,8 @@
 
 class panel extends Controller  {
 	
+	public $yetkikontrol;
+	
 	
 	function __construct() {
 		
@@ -9,14 +11,19 @@ class panel extends Controller  {
 		
 	$this->Modelyukle('adminpanel');
 	Session::init();
+		
+		
 	
 		if (!Session::get("AdminAd") && !Session::get("Adminid")) : 
 
-		
 		$this->giris();
 		
-	
 		exit();
+		
+		else:
+		
+		$this->yetkikontrol = new PanelHarici();
+		
 		endif;
 
 
@@ -38,17 +45,30 @@ class panel extends Controller  {
 	} // LOGİN GİRİŞ SAYFASI	
 	
 	function Index() {
-		
 	
-	$this->siparisler();
+		if ($this->yetkikontrol->yoneticiYetki==2) :
+		
+		$this->urunler();
+		
+		elseif ($this->yetkikontrol->yoneticiYetki==3) :
+		
+		$this->uyeler();
+		
+		else:
+		
+		$this->siparisler();
+		
+		endif;
+	
+	
 		
 	} // VARSAYILAN OLARAK ÇALIŞIYOR
 
 	
-	//----------------------------------------------
+	//--------------------------------------------------------------------------------------
 	
 	function siparisler() {
-			
+			$this->yetkikontrol->YetkisineBak("siparisYonetim");
 			
 	$this->view->goster("YonPanel/sayfalar/siparis",array(
 	
@@ -62,7 +82,7 @@ class panel extends Controller  {
 	
 	function kargoguncelle($sipno) {
 			
-			
+			$this->yetkikontrol->YetkisineBak("siparisYonetim");
 	$this->view->goster("YonPanel/sayfalar/siparis",array(
 	
 	"KargoGuncelle" => $this->model->Verial("siparisler","where siparis_no=".$sipno)
@@ -74,7 +94,7 @@ class panel extends Controller  {
 	}  // KARGO DURUM GÜNCELLEME
 	
 	function kargoguncelleSon() {
-			
+			$this->yetkikontrol->YetkisineBak("siparisYonetim");
 				if ($_POST) :	
 		
 				$sipno=$this->form->get("sipno")->bosmu();
@@ -112,7 +132,7 @@ class panel extends Controller  {
 	} // KARGO DURUM GÜNCELLEME SON	
 	
 	function siparisarama() {	
-		
+		$this->yetkikontrol->YetkisineBak("siparisYonetim");
 		if ($_POST) :
 		$aramatercih=$this->form->get("aramatercih")->bosmu();
 		
@@ -182,10 +202,10 @@ class panel extends Controller  {
 		
 	} // SİPARİŞ ARAMA
 	
-	//----------------------------------------------
+	//--------------------------------------------------------------------------------------
 	
 	function kategoriler() {
-			
+			$this->yetkikontrol->YetkisineBak("kategoriYonetim");
 			
 	$this->view->goster("YonPanel/sayfalar/kategoriler",array(
 	
@@ -203,7 +223,7 @@ class panel extends Controller  {
 	
 	function kategoriGuncelle($kriter,$id) {
 		
-	
+	$this->yetkikontrol->YetkisineBak("kategoriYonetim");
 				
 	$this->view->goster("YonPanel/sayfalar/kategoriguncelleme",array(
 	
@@ -220,7 +240,7 @@ class panel extends Controller  {
 	
 	function kategoriGuncelSon() {
 		
-	
+	$this->yetkikontrol->YetkisineBak("kategoriYonetim");
 		
 			if ($_POST) :	
 				$kriter=$this->form->get("kriter")->bosmu();
@@ -314,7 +334,7 @@ class panel extends Controller  {
 	
 	function kategoriSil($kriter,$id) {
 	
-		
+		$this->yetkikontrol->YetkisineBak("kategoriYonetim");
 	$sonuc=$this->model->Sil($kriter."_kategori","id=".$id);
 	
 	
@@ -342,7 +362,7 @@ class panel extends Controller  {
 	} // KATEGORİ SİL
 	
 	function kategoriEkle($kriter) {
-		
+		$this->yetkikontrol->YetkisineBak("kategoriYonetim");
 	$this->view->goster("YonPanel/sayfalar/kategoriEkle",
 	array("kriter" => $kriter,
 	"AnaktegorilerTumu" => $this->model->Verial("ana_kategori",false),
@@ -353,7 +373,7 @@ class panel extends Controller  {
 	
 	function kategoriEkleSon() {
 	
-	
+	$this->yetkikontrol->YetkisineBak("kategoriYonetim");
 			
 		
 			if ($_POST) :	
@@ -442,7 +462,7 @@ class panel extends Controller  {
 	} // KATEGORİ EKLE SON
 	
 	function kategoriarama() {	
-		
+		$this->yetkikontrol->YetkisineBak("kategoriYonetim");
 		if ($_POST) :
 		$aramatercih=$this->form->get("aramatercih")->bosmu();
 		
@@ -546,9 +566,11 @@ class panel extends Controller  {
 	
 	
 	
-	//----------------------------------------------
+	//--------------------------------------------------------------------------------------
 	
 	function uyeler ($mevcutsayfa=false) {
+		
+		$this->yetkikontrol->YetkisineBak("uyeYonetim");
 		
 		$this->Pagination->paginationOlustur($this->model->sayfalama("uye_panel"),$mevcutsayfa,$this->model->tekliveri("uyelerGoruntuAdet","from ayarlar"));
 		
@@ -567,7 +589,7 @@ class panel extends Controller  {
 		
 	function uyeguncelleSon() {
 			
-			
+			$this->yetkikontrol->YetkisineBak("uyeYonetim");
 			
 				if ($_POST) :	
 				
@@ -632,7 +654,7 @@ class panel extends Controller  {
 	
 	function uyeGuncelle($id) {
 		
-	
+	$this->yetkikontrol->YetkisineBak("uyeYonetim");
 				
 	$this->view->goster("YonPanel/sayfalar/uyeler",array(	
 	"Uyeguncelle" => $this->model->Verial("uye_panel","where id=".$id)	
@@ -643,7 +665,7 @@ class panel extends Controller  {
 	} // ÜYELER GÜNCELLE	
 		
 	function uyeSil($id) {
-	
+	$this->yetkikontrol->YetkisineBak("uyeYonetim");
 		
 	$sonuc=$this->model->Sil("uye_panel","id=".$id);
 	
@@ -670,7 +692,7 @@ class panel extends Controller  {
 	}  // ÜYE SİL	
 		
 	function uyearama($kelime=false,$mevcutsayfa=false) {	
-		
+		$this->yetkikontrol->YetkisineBak("uyeYonetim");
 		
 		if ($_POST) :
 				
@@ -765,7 +787,7 @@ class panel extends Controller  {
 	
 	function uyeadresbak($id) {
 		
-	
+	$this->yetkikontrol->YetkisineBak("uyeYonetim");
 				
 	$this->view->goster("YonPanel/sayfalar/uyeler",array(	
 	"UyeadresBak" => $this->model->Verial("adresler","where uyeid=".$id)	
@@ -776,7 +798,7 @@ class panel extends Controller  {
 	} // ÜYE ADRESLERİ
 	
 	function musteriyorumlar ($mevcutsayfa=false) {
-		
+		$this->yetkikontrol->YetkisineBak("uyeYonetim");
 		$this->Pagination->paginationOlustur($this->model->sayfalama("yorumlar"),$mevcutsayfa,$this->model->tekliveri("uyelerYorumAdet","from ayarlar"));
 		
 		
@@ -805,10 +827,10 @@ class panel extends Controller  {
 		
 	} // ÜYELERİN YORUMLARI
 	
-	//----------------------------------------------
+	//--------------------------------------------------------------------------------------
 	
 	function urunler ($mevcutsayfa=false) {
-		
+		$this->yetkikontrol->YetkisineBak("urunYonetim");
 		$this->Pagination->paginationOlustur($this->model->sayfalama("urunler"),$mevcutsayfa,$this->model->tekliveri("urunlerGoruntuAdet","from ayarlar"));
 		
 		$this->view->goster("YonPanel/sayfalar/urunler",array(
@@ -827,7 +849,7 @@ class panel extends Controller  {
 	
 	function urunGuncelle($id) {
 		
-	
+	$this->yetkikontrol->YetkisineBak("urunYonetim");
 				
 	$this->view->goster("YonPanel/sayfalar/urunler",array(	
 	"Urunguncelle" => $this->model->Verial("urunler","where id=".$id),
@@ -839,7 +861,7 @@ class panel extends Controller  {
 	} // ÜRÜNLER GÜNCELLE	
 	
 	function urunguncelleSon() {	
-		
+		$this->yetkikontrol->YetkisineBak("urunYonetim");
 		
 			if ($_POST) :	
 			
@@ -954,7 +976,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	} // ÜRÜNLER GÜNCEL SON
 	
 	function Urunekleme() {	
-				
+			$this->yetkikontrol->YetkisineBak("urunYonetim");	
 	$this->view->goster("YonPanel/sayfalar/urunler",array(	
 	"Urunekleme" => true,
 	"data2" => $this->model->Verial("alt_kategori",false)		
@@ -966,7 +988,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 	function urunekle() {	
 		
-		
+		$this->yetkikontrol->YetkisineBak("urunYonetim");
 			if ($_POST) :	
 			
 				$urunad=$this->form->get("urunad")->bosmu();
@@ -1047,7 +1069,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	function urunSil($id) {
 	
-		
+		$this->yetkikontrol->YetkisineBak("urunYonetim");
 	$sonuc=$this->model->Sil("urunler","id=".$id);
 	
 	
@@ -1073,7 +1095,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	}  // ÜRÜNLER SİL	
 	
 	function katgoregetir($katid=false,$mevcutsayfa=false) {	
-		
+		$this->yetkikontrol->YetkisineBak("urunYonetim");
 		if ($_POST) :
 				
 		$katid=$this->form->get("katid")->bosmu();
@@ -1138,7 +1160,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	} // ÜRÜNLERi KATEGORİYE GÖRE GETİR	
 	
 	function urunarama($kelime=false,$mevcutsayfa=false) {	
-		
+		$this->yetkikontrol->YetkisineBak("urunYonetim");
 		if ($_POST) :
 				
 		$aramaverisi=$this->form->get("arama")->bosmu();
@@ -1233,9 +1255,11 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	} // ÜRÜNLER ARAMA	
 	
-	//----------------------------------------------
+	//--------------------------------------------------------------------------------------
 	
 	function bulten () {
+		
+		$this->yetkikontrol->YetkisineBak("bultenYonetim");
 		
 		$this->view->goster("YonPanel/sayfalar/bulten",array(
 		
@@ -1249,9 +1273,9 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 	function mailSil($id) {
 	
+		$this->yetkikontrol->YetkisineBak("bultenYonetim");
 		
-	$sonuc=$this->model->Sil("bulten","id=".$id);
-	
+		$sonuc=$this->model->Sil("bulten","id=".$id);
 	
 		if ($sonuc): 
 	
@@ -1275,6 +1299,8 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	}  // BÜLTEN MAİL SİL
 	
 	function mailarama() {	
+		
+		$this->yetkikontrol->YetkisineBak("bultenYonetim");
 		
 		if ($_POST) :
 				
@@ -1331,6 +1357,8 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 	function tarihegoregetir() {	
 		
+		$this->yetkikontrol->YetkisineBak("bultenYonetim");
+		
 		if ($_POST) :
 				
 		$tar1=$this->form->get("tar1")->bosmu();
@@ -1385,9 +1413,11 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	} // BÜLTEN TARİHE GÖRE ARAMA
 
-	//----------------------------------------------
+	//--------------------------------------------------------------------------------------
 	
 	function sistemayar () {
+		
+		$this->yetkikontrol->YetkisineBak("sistemayarYonetim");
 		
 		$this->view->goster("YonPanel/sayfalar/sistemayar",array(
 		
@@ -1401,6 +1431,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 	function ayarguncelle() {	
 		
+			$this->yetkikontrol->YetkisineBak("sistemayarYonetim");
 		
 			if ($_POST) :	
 			
@@ -1481,9 +1512,11 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	}	 // SİSTEM AYARLARI GÜNCELLEME SON
 	
 	
-	//----------------------------------------------
+	//--------------------------------------------------------------------------------------
 	
 	function sistembakim () {
+		
+		$this->yetkikontrol->YetkisineBak("sistembakimYonetim");
 		
 		$this->view->goster("YonPanel/sayfalar/bakim",array(
 		
@@ -1497,6 +1530,8 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	
 	function bakimyap () {
+		
+			$this->yetkikontrol->YetkisineBak("sistembakimYonetim");
 			
 			if ($_POST["sistembtn"]):
 			
@@ -1529,7 +1564,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	} //SİSTEM BAKIM SONUÇ
 	
-	//----------------------------------------------
+	//--------------------------------------------------------------------------------------
 
 	
 	/*
@@ -1690,10 +1725,10 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	} // YÖNETİCİ ŞİFRESİNİ GÜNCELLİYOR.
 	
-	//----------------------------------------------
+	//--------------------------------------------------------------------------------------
 	
 	function yonetici () {
-		
+		$this->yetkikontrol->YetkisineBak("yoneticiYonetim");
 		$this->view->goster("YonPanel/sayfalar/yonetici",array(
 		
 		"data" => $this->model->Verial("yonetim",false),
@@ -1705,7 +1740,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	}  // YÖNETİCİLER GELİYOR
 	
 	function yonSil($id) {
-	
+	$this->yetkikontrol->YetkisineBak("yoneticiYonetim");
 		
 	$sonuc=$this->model->Sil("yonetim","id=".$id);
 	
@@ -1731,27 +1766,36 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	}  // YÖNETİCİ SİL
 	
-	function yonekle() {	
-				
-	$this->view->goster("YonPanel/sayfalar/yonetici",array(	
-	"yoneticiekle" => true		
-	));	
+	function yonekle($islem) {	
+		$this->yetkikontrol->YetkisineBak("yoneticiYonetim");
+	if ($islem=="ilk") :
 		
-	
+		$this->view->goster("YonPanel/sayfalar/yonetici",array(	
+		"yoneticiekle" => true		
+		));	
 		
-	}	 // YÖNETİCİ EKLEME
-	
-	function yonekleson() {		
-
-	if ($_POST) :		
+	elseif($islem=="son") :
+		
+		if ($_POST) :		
 		
 	 $yonadi=$this->form->get("yonadi")->bosmu();
 	 $sif1=$this->form->get("sif1")->bosmu();
 	 $sif2=$this->form->get("sif2")->bosmu();
-	 
+		
+		
+	 	$siparisYonetim=$this->form->Checkboxget("siparisYonetim");
+		$kategoriYonetim=$this->form->Checkboxget("kategoriYonetim");
+		$uyeYonetim=$this->form->Checkboxget("uyeYonetim");
+		$urunYonetim=$this->form->Checkboxget("urunYonetim");
+		$muhasebeYonetim=$this->form->Checkboxget("muhasebeYonetim");
+		$yoneticiYonetim=$this->form->Checkboxget("yoneticiYonetim");
+		$bultenYonetim=$this->form->Checkboxget("bultenYonetim");
+		$sistemayarYonetim=$this->form->Checkboxget("sistemayarYonetim");
+		$sistembakimYonetim=$this->form->Checkboxget("sistembakimYonetim");
+	 	$yetki=$this->form->Selectboxget("yetki");
 	 $sifre=$this->form->SifreTekrar($sif1,$sif2); // ŞİFRELİ YENİ HALİ ALIYORUM
 	/*
-	ÖNCE GELEN ŞFİREYİ SORGULAMAM LAZIM DOĞRUMU DİYE, EĞER MEVCUT ŞİFRE DOĞRU İSE	
+	ÖNCE GELEN ŞİFREYİ SORGULAMAM LAZIM DOĞRUMU DİYE, EĞER MEVCUT ŞİFRE DOĞRU İSE	
 	DEVAM EDECEK HATALI İSE İŞLEM BİTECEK
 	
 	*/
@@ -1768,8 +1812,10 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 
 		
 				$sonuc=$this->model->Ekleme("yonetim",
-				array("ad","sifre"),
-				array($yonadi,$sifre));
+				array("ad","sifre","yetki","siparisYonetim","kategoriYonetim","uyeYonetim","urunYonetim","muhasebeYonetim",
+					  "yoneticiYonetim","bultenYonetim","sistemayarYonetim","sistembakimYonetim"),
+				array($yonadi,$sifre,$yetki,$siparisYonetim,$kategoriYonetim,$uyeYonetim,$urunYonetim,$muhasebeYonetim,
+					  $yoneticiYonetim,$bultenYonetim,$sistemayarYonetim,$sistembakimYonetim));
 			
 				if ($sonuc): 
 				
@@ -1797,16 +1843,86 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 	$this->bilgi->direktYonlen("/");
 	endif;
-	
-	
 		
-	} // YÖNETİCİ EKLEME SON.
+	endif;
+		
+	}	 // YÖNETİCİ EKLEME
+	
+	function yonguncelle($islem,$yonid=false) {	
+		$this->yetkikontrol->YetkisineBak("yoneticiYonetim");
+	if ($islem=="ilk") :
+		
+		$this->view->goster("YonPanel/sayfalar/yonetici",array(	
+	        "YoneticiGuncelle" => $this->model->Verial("yonetim","where id=".$yonid)	
+	        ));	
+		
+	elseif($islem=="son") :
+		
+		if ($_POST) :		
+		
+	 $yonadi=$this->form->get("yonadi")->bosmu();
+	 
+	 $yoneticiId=$this->form->get("yonid")->bosmu();
+		
+		$yetki=$this->form->Selectboxget("yetki");
+	 	$siparisYonetim=$this->form->Checkboxget("siparisYonetim");
+		$kategoriYonetim=$this->form->Checkboxget("kategoriYonetim");
+		$uyeYonetim=$this->form->Checkboxget("uyeYonetim");
+		$urunYonetim=$this->form->Checkboxget("urunYonetim");
+		$muhasebeYonetim=$this->form->Checkboxget("muhasebeYonetim");
+		$yoneticiYonetim=$this->form->Checkboxget("yoneticiYonetim");
+		$bultenYonetim=$this->form->Checkboxget("bultenYonetim");
+		$sistemayarYonetim=$this->form->Checkboxget("sistemayarYonetim");
+		$sistembakimYonetim=$this->form->Checkboxget("sistembakimYonetim");
+	 			
+	if (!empty($this->form->error)) :
+					
+				$this->view->goster("YonPanel/sayfalar/yonetici",
+				array(		
+				"bilgi" => $this->bilgi->SweetAlert(URL."/panel/yonetici","BAŞARISIZ","Tüm alanlar doldurulmalıdır.","warning")
+				 ));		
+					
+				else:
+		
+				$sonuc=$this->model->Guncelle("yonetim",
+				array("ad","yetki","siparisYonetim","kategoriYonetim","uyeYonetim","urunYonetim","muhasebeYonetim",
+					  "yoneticiYonetim","bultenYonetim","sistemayarYonetim","sistembakimYonetim"),
+				array($yonadi,$yetki,$siparisYonetim,$kategoriYonetim,$uyeYonetim,$urunYonetim,$muhasebeYonetim,
+					  $yoneticiYonetim,$bultenYonetim,$sistemayarYonetim,$sistembakimYonetim),"id=".$yoneticiId);
+				
+				if ($sonuc): 
+		
+				$this->view->goster("YonPanel/sayfalar/yonetici",
+				array(
+				"bilgi" => $this->bilgi->SweetAlert(URL."/panel/yonetici","BAŞARILI","YÖNETİCİ GÜNCELLEME BAŞARILI","success")
+				 ));
+					
+			else:
+			
+				$this->view->goster("YonPanel/sayfalar/yonetici",
+				array(
+				"bilgi" => $this->bilgi->SweetAlert(URL."/panel/yonetici","BAŞARISIZ","GÜNCELLEME SIRASINDA HATA OLUŞTU.","warning")
+				 ));	
+			
+			endif;
+	
+	endif;
+	
+	
+	else:	
+	
+	$this->bilgi->direktYonlen("/panel/yonetici");
+	endif;
+		
+	endif;
+		
+	}	 // YÖNETİCİ GÜNCELLE
 	
 	//--------------------------------------------------------------------------------------
 	
 	function bankabilgileri () {
 		
-		
+		$this->yetkikontrol->YetkisineBak("muhasebeYonetim");
 		
 		$this->view->goster("YonPanel/sayfalar/bankabilgileri",array(
 		
@@ -1820,7 +1936,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	} // BANKA BİLGİLERİ GELİYOR
 	
 	function bankaGuncelle($islem,$id=false) {
-		
+		$this->yetkikontrol->YetkisineBak("muhasebeYonetim");
 	if ($islem=="ilk") :
 		
 	        $this->view->goster("YonPanel/sayfalar/bankabilgileri",array(	
@@ -1898,7 +2014,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	function bankaSil($id) {
 	
-		
+		$this->yetkikontrol->YetkisineBak("muhasebeYonetim");
 	$sonuc=$this->model->Sil("bankabilgileri","id=".$id);
 	
 	
@@ -1924,7 +2040,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	}  // BANKA BİLGİLERİ SİL			
 	
 	function bankaEkle($islem) {
-		
+		$this->yetkikontrol->YetkisineBak("muhasebeYonetim");
 	if($islem=="ilk") :
 		
 	$this->view->goster("YonPanel/sayfalar/bankabilgileri",array(	
@@ -2000,7 +2116,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	} // BANKA BİLGİSİ EKLE
 	
-	
+	//--------------------------------------------------------------------------------------
 	
 
 	

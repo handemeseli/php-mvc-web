@@ -1,4 +1,4 @@
-<?php $Harici= new HariciFonksiyonlar(); ob_start();  ?>
+<?php $Harici= new HariciFonksiyonlar(); $PanelHarici= new PanelHarici(); ob_start();  ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -46,76 +46,7 @@
      
       
       
-      <li class="nav-item">
-        <a class="nav-link" href="<?php echo URL."/panel/siparisler";  ?>">
-          <i class="fas fa-donate"></i>
-          <span>Sipariş Yönetimi</span></a>
-      </li>
-      
-       <li class="nav-item">
-        <a class="nav-link" href="<?php echo URL."/panel/kategoriler";  ?>">
-          <i class="fas fa-sliders-h"></i>
-          <span>Kategori Yönetimi</span></a>
-      </li>
-       
-		<li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseuyeler" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-user"></i>
-          <span>Üye Yönetimi</span>
-        </a>
-        <div id="collapseuyeler" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?php echo URL."/panel/uyeler";  ?>">Üyeler</a>
-            <a class="collapse-item" href="<?php echo URL."/panel/musteriyorumlar";  ?>">Üye Yorumları</a>
-            
-          </div>
-        </div>
-      </li>
-        <li class="nav-item">
-        <a class="nav-link" href="<?php echo URL."/panel/urunler";  ?>">
-          <i class="fas  fa-award"></i>
-          <span>Ürün Yönetimi</span></a>
-      </li>
-		
-		
-		<li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsemuhasebe" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-hand-holding-usd"></i>
-          <span>Muhasebe</span>
-        </a>
-        <div id="collapsemuhasebe" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">Raporlar</a>
-            <a class="collapse-item" href="<?php echo URL."/panel/bankabilgileri";  ?>">Banka Bilgileri</a>
-            
-          </div>
-        </div>
-      </li>
-		
-		
-		
-      <li class="nav-item">
-        <a class="nav-link" href="<?php echo URL."/panel/yonetici";  ?>">
-          <i class="fas fa-lock"></i>
-          <span>Kullanıcı Yönetimi</span></a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="<?php echo URL."/panel/bulten";  ?>">
-          <i class="fas  fa-envelope-square"></i>
-          <span>Bülten Yönetimi</span></a>
-      </li>
-      
-       <li class="nav-item">
-        <a class="nav-link" href="<?php echo URL."/panel/sistemayar";  ?>">
-          <i class="fas  fa-cogs"></i>
-          <span>Sistem Ayarları</span></a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="<?php echo URL."/panel/sistembakim";  ?>">
-          <i class="fas  fa-wrench"></i>
-          <span>Sistem Bakım</span></a>
-      </li>
+      <?php $PanelHarici->MenuKontrol(); ?>
       
      
        

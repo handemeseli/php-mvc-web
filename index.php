@@ -13,6 +13,7 @@ spl_autoload_register(function ($className)
 require 'config/genel.php';
 require 'config/database.php';
 require 'helpers/HariciFonksiyonlar.php';
+require 'helpers/PanelHarici.php';
 require 'Route.php';
 
 $Route=new Route;

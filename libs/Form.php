@@ -6,7 +6,7 @@ class Form extends Bilgi  {
 		public $error=array(),$sonuc=array();
 
 		
-		function get ($key) {
+	function get ($key) {
 			
 			$this->deger=$key;
 					
@@ -18,9 +18,29 @@ class Form extends Bilgi  {
 			
 		}
 		
+	function Checkboxget ($key) {
+			
+		if (!isset ($_POST[$key])) :
+			
+			return 0;	
+		
+		else:
+		
+			if ($_POST[$key]=="on") :
+			
+			return 1;
+		
+			endif;
+		
+		endif;
+													
+	}
 	
-		
-		
+	function Selectboxget ($key) {
+
+		return $_POST[$key];
+													
+	}
 	
 	function bosmu() {
 			
@@ -39,9 +59,9 @@ class Form extends Bilgi  {
 			
 			endif;
 			
-		} // boşmu 
+		} // boş mu 
 		
-		function GercektenMailmi($email) {		
+	function GercektenMailmi($email) {		
 		
 						
 			getmxrr(substr($email,strpos($email,'@')+1),$this->sonuc);
@@ -86,7 +106,7 @@ class Form extends Bilgi  {
 		} // şifreler uyuşuyor mu
 		
 		
-	public static function Olustur($kriter,array $veri=NULL,$textmetin=false) {
+	public static function Olustur($kriter,array $veri=NULL,$textmetin=false,$check=false) {
 		
 		/*
 		1 form
@@ -105,14 +125,17 @@ class Form extends Bilgi  {
 		
 		if (isset($veri)) :
 		
+			foreach ($veri as $anahtar => $deger) :
 		
-		
-		
-		foreach ($veri as $anahtar => $deger) :
-		
-		echo $anahtar."='".$deger."' ";	
+			echo $anahtar."='".$deger."' ";	
 				
-		endforeach;
+			endforeach;
+		
+			if (isset($check)) :
+		
+			echo $check;
+		
+			endif;
 		
 		echo ($kriter==3) ? '>'.$textmetin.'</textarea>' : '>'; // ternay tek satır sorgu
 		

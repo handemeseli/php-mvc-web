@@ -1,6 +1,15 @@
 
 $(document).ready(function(e) {
-
+	
+	$('#sec').click(function() {
+		$('#EklemeformuAna input[type="checkbox"]').attr("checked",true);
+		$('#GuncelleformuAna input[type="checkbox"]').attr("checked",true);
+	});
+	
+	$('#kaldir').click(function() {
+		$('#EklemeformuAna input[type="checkbox"]').attr("checked",false);
+		$('#GuncelleformuAna input[type="checkbox"]').attr("checked",false);
+	});
 	
 	$('#detaygoster a').click(function() {
 		
