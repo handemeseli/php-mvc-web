@@ -229,7 +229,7 @@ class panel extends Controller  {
 	
 	"data" => $this->model->Verial($kriter."_kategori","where id=".$id),
 	"kriter" => $kriter,
-	"AnaktegorilerTumu" => $this->model->Verial("ana_kategori",false),
+	"AnakategorilerTumu" => $this->model->Verial("ana_kategori",false),
 	"CocukkategorilerTumu" => $this->model->Verial("cocuk_kategori",false)
 	
 	));	
@@ -830,6 +830,7 @@ class panel extends Controller  {
 	//--------------------------------------------------------------------------------------
 	
 	function urunler ($mevcutsayfa=false) {
+		
 		$this->yetkikontrol->YetkisineBak("urunYonetim");
 		$this->Pagination->paginationOlustur($this->model->sayfalama("urunler"),$mevcutsayfa,$this->model->tekliveri("urunlerGoruntuAdet","from ayarlar"));
 		
@@ -838,7 +839,9 @@ class panel extends Controller  {
 		"data" => $this->model->Verial("urunler"," LIMIT ".$this->Pagination->limit.",".$this->Pagination->gosterilecekadet), 
 		"toplamsayfa" => $this->Pagination->toplamsayfa,
 		"toplamveri" => $this->model->sayfalama("urunler"),
-		"data2" => $this->model->Verial("alt_kategori",false)
+		"data2" => $this->model->Verial("alt_kategori",false),
+		"AnakategorilerTumu" => $this->model->Verial("ana_kategori",false),
+		"CocukkategorilerTumu" => $this->model->Verial("cocuk_kategori",false),
 		
 		));
 		
@@ -853,7 +856,9 @@ class panel extends Controller  {
 				
 	$this->view->goster("YonPanel/sayfalar/urunler",array(	
 	"Urunguncelle" => $this->model->Verial("urunler","where id=".$id),
-	"data2" => $this->model->Verial("alt_kategori",false)		
+	"data2" => $this->model->Verial("alt_kategori",false),
+	"AnakategorilerTumu" => $this->model->Verial("ana_kategori",false),
+	"CocukkategorilerTumu" => $this->model->Verial("cocuk_kategori",false)
 	));	
 		
 	
@@ -865,14 +870,17 @@ class panel extends Controller  {
 		
 			if ($_POST) :	
 			
+						
 				$urunad=$this->form->get("urunad")->bosmu();
+				$ana_kat_id=$this->form->get("ana_kat_id")->bosmu();
+				$cocuk_kat_id=$this->form->get("cocuk_kat_id")->bosmu();
 				$katid=$this->form->get("katid")->bosmu();
 				$kumas=$this->form->get("kumas")->bosmu();
 				$uretimyeri=$this->form->get("uretimyeri")->bosmu();
 				$renk=$this->form->get("renk")->bosmu();
 				$fiyat=$this->form->get("fiyat")->bosmu();
 				$stok=$this->form->get("stok")->bosmu();
-				$durum=$this->form->get("durum")->bosmu();
+				$durum=$this->form->Selectboxget("durum");
 				$urunaciklama=$this->form->get("urunaciklama")->bosmu();
 				$urunozellik=$this->form->get("urunozellik")->bosmu();
 				$urunekstra=$this->form->get("urunekstra")->bosmu();
@@ -913,9 +921,9 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 			
 			
-			$sutunlar=array("katid","urunad","durum","aciklama","kumas","urtYeri","renk","fiyat","stok","ozellik","ekstraBilgi");
+			$sutunlar=array("ana_kat_id","cocuk_kat_id","katid","urunad","durum","aciklama","kumas","urtYeri","renk","fiyat","stok","ozellik","ekstraBilgi");
 			
-			$veriler=array($katid,$urunad,$durum,$urunaciklama,$kumas,$uretimyeri,$renk,$fiyat,$stok,$urunozellik,$urunekstra);
+			$veriler=array($ana_kat_id,$cocuk_kat_id,$katid,$urunad,$durum,$urunaciklama,$kumas,$uretimyeri,$renk,$fiyat,$stok,$urunozellik,$urunekstra);
 			
 			
  if ($this->Upload->uploadPostAl("res1")) :
@@ -1115,7 +1123,9 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 				"toplamsayfa" => $this->Pagination->toplamsayfa,
 				"toplamveri" => count($bilgicek),
 				"katid" => $katid,	
-				"data2" => $this->model->Verial("alt_kategori",false)			
+				"data2" => $this->model->Verial("alt_kategori",false),
+				"AnakategorilerTumu" => $this->model->Verial("ana_kategori",false)
+					
 				));	
 		
 			
@@ -1196,10 +1206,11 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 			kumas LIKE '%".$aramaverisi."%'  or 
 			urtYeri LIKE '%".$aramaverisi."%' or 
 			stok LIKE '%".$aramaverisi."%' LIMIT ".$this->Pagination->limit.",".$this->Pagination->gosterilecekadet), 
-		"toplamsayfa" => $this->Pagination->toplamsayfa,
-		"toplamveri" => count($bilgicek),
-		"arama" => $aramaverisi,
-		"data2" => $this->model->Verial("alt_kategori",false)	
+			"toplamsayfa" => $this->Pagination->toplamsayfa,
+			"toplamveri" => count($bilgicek),
+			"arama" => $aramaverisi,
+			"data2" => $this->model->Verial("alt_kategori",false),
+			"AnakategorilerTumu" => $this->model->Verial("ana_kategori",false)
 		));
 				else:
 				
@@ -1232,10 +1243,11 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 			kumas LIKE '%".$kelime."%'  or 
 			urtYeri LIKE '%".$kelime."%' or 
 			stok LIKE '%".$kelime."%' LIMIT ".$this->Pagination->limit.",".$this->Pagination->gosterilecekadet), 
-		"toplamsayfa" => $this->Pagination->toplamsayfa,
-		"toplamveri" => count($bilgicek),
-		"arama" => $kelime,
-		"data2" => $this->model->Verial("alt_kategori",false)	
+			"toplamsayfa" => $this->Pagination->toplamsayfa,
+			"toplamveri" => count($bilgicek),
+			"arama" => $kelime,
+			"data2" => $this->model->Verial("alt_kategori",false),
+			"AnakategorilerTumu" => $this->model->Verial("ana_kategori",false)
 		));
 			
 			

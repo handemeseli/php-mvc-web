@@ -163,6 +163,14 @@ class  PanelHarici  extends Model{
 		endif;
 		
 	}
+	
+	function kategorilerial ($istenilenveriler,$tablolar,$kosul) {
+		
+		
+		return $this->db->joinislemi($istenilenveriler,$tablolar,$kosul);
+	}
+		
+		
 		
  
 }

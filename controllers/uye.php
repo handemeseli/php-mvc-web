@@ -583,7 +583,9 @@ $GelenUrun=$this->model->VerileriAl("urunler","where id=".$id);
 	
 	));
 	
-	
+		echo $this->model->Guncelleİslemi("urunler",
+		array("stok"),
+		array($GelenUrun[0]["stok"]-$adet),"id=".$GelenUrun[0]["id"]);
 		
 	endforeach;
 	

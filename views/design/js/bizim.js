@@ -1,6 +1,62 @@
 
 $(document).ready(function(e) {
 	
+	
+	$('#anaekranselect').attr("disabled",false);
+	$('#cocukekranselect').attr("disabled",true);
+	$('#katidekranselect').attr("disabled",true);
+				
+	$('#anaekranselect').on('change',function(){
+		
+		var secilendeger= $(this).val();
+		
+		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/selectkontrol",{"kriter":"anaekrancocukgetir","anaid":secilendeger},function(cevap) {
+			$('#cocukekranselect').attr("disabled",false);
+			$('#cocukekranselect').html(cevap);
+			
+		});
+		$('#katidekranselect').attr("disabled",true).html('<option value=0>Seçiniz</option>');
+	});
+	
+	$('#cocukekranselect').on('change',function(){
+		$('#katidekranselect').attr("disabled",false);
+		var secilendeger= $(this).val();
+		
+		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/selectkontrol",{"kriter":"anaekranaltgetir","cocukid":secilendeger},function(cevap) {
+			$('#katidekranselect').html(cevap);
+		});
+		
+	});
+	
+	/* ÜRÜN GÜNCELLEME EKRANI */
+	$('#sifirla').on('click',function(){ 
+	$('#anaselect').attr("disabled",false);
+	$('#cocukselect').attr("disabled",true).html('<option value=0>Seçiniz</option>');
+	$('#altselect').attr("disabled",true).html('<option value=0>Seçiniz</option>');
+		
+	});
+		
+	$('#anaselect').on('change',function(){
+		$('#cocukselect').attr("disabled",false).html('<option value=0>Seçiniz</option>');
+		var secilendeger= $(this).val();
+		
+		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/selectkontrol",{"kriter":"cocukgetir","anaid":secilendeger},function(cevap) {
+			$('#cocukselect').html(cevap);
+			
+		});
+		$('#altselect').attr("disabled",true).html('<option value=0>Seçiniz</option>');
+	});
+	
+	$('#cocukselect').on('change',function(){
+		$('#altselect').attr("disabled",false).html('<option value=0>Seçiniz</option>');
+		var secilendeger= $(this).val();
+		
+		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/selectkontrol",{"kriter":"altgetir","cocukid":secilendeger},function(cevap) {
+			$('#altselect').html(cevap);
+		});
+		
+	});/* ÜRÜN GÜNCELLEME EKRANI */
+
 	$('#sec').click(function() {
 		$('#EklemeformuAna input[type="checkbox"]').attr("checked",true);
 		$('#GuncelleformuAna input[type="checkbox"]').attr("checked",true);
@@ -25,8 +81,7 @@ $(document).ready(function(e) {
 		
 		
 	});
-	
-	
+
 	$("#aramakutusu").attr("placeholder","Sipariş numarası");	
 	
 	$("#aramaselect").on('change', function(e) {
@@ -45,7 +100,6 @@ $(document).ready(function(e) {
 		
 	});
 
-	
 	$("#SepetDurum").load("http://localhost/PROJELER/mvcproje/GenelGorev/SepetKontrol");
 	
 	$("#Sonuc").hide();
@@ -92,9 +146,6 @@ $(document).ready(function(e) {
 	});
 	
 	
-	
-	
-	
 	$("#bultenBtn").click(function() {
 		
 		
@@ -120,10 +171,7 @@ $(document).ready(function(e) {
 		
         
     });
-	
-	
-	
-	
+
 	
 	$("#İletisimbtn").click(function() {
 		//$('#iletisimForm').fadeOut();
@@ -158,8 +206,7 @@ $(document).ready(function(e) {
 		
         
     });
-	
-	
+
 	
 		$("#SepetBtn").click(function() {
 
@@ -187,11 +234,7 @@ $(document).ready(function(e) {
 		
         
     });
-	
-	
-	
-	
-	
+
 	$('#GuncelForm input[type="button"]').click(function() {
 		
 		var id=$(this).attr('data-value');
@@ -210,11 +253,9 @@ $(document).ready(function(e) {
 		
 	});
 	
-	
 	//--------------------------------------------------------------------------
-	
-	
-		$('#GuncelButonlarinanasi input[type="button"]').click(function() {
+
+	$('#GuncelButonlarinanasi input[type="button"]').click(function() {
 		
 		var id=$(this).attr('data-value');
 		
@@ -232,8 +273,7 @@ $(document).ready(function(e) {
 		
 		
 	});
-	
-	
+
 	$(document).on('blur' ,'textarea[name=yorum]',function() {
 		
 		$(this).parent().append($('<span/>').html($(this).val()));
@@ -256,11 +296,10 @@ $(document).ready(function(e) {
 		
 		
 	});
-	
-	
-//---------------------------------------------------------------------------
 
-$('#AdresGuncelButonlarinanasi input[type="button"]').click(function() {
+	//---------------------------------------------------------------------------
+
+	$('#AdresGuncelButonlarinanasi input[type="button"]').click(function() {
 		
 		var id=$(this).attr('data-value');
 		
@@ -277,8 +316,7 @@ $('#AdresGuncelButonlarinanasi input[type="button"]').click(function() {
 		
 		
 	});
-	
-	
+
 	$(document).on('blur' ,'textarea[name=adres]',function() {
 		
 		$(this).parent().append($('<span/>').html($(this).val()));
@@ -301,12 +339,9 @@ $('#AdresGuncelButonlarinanasi input[type="button"]').click(function() {
 		
 		
 	});	
-	
-	
-	
+
 	var ad,soyad,mail,telefon;
-	
-	
+
 	$('input[name=bilgiTercih]').on('change',function() {
 		
 	
@@ -344,186 +379,169 @@ $('#AdresGuncelButonlarinanasi input[type="button"]').click(function() {
 	
 		
 	});
-	
 
-	
-	
-	
-
-	
-
-	
-	
 });
 
 function VarsayilanYap(deger,deger2) {
 
-		
-
 		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/VarsayilanAdresYap",{"uyeid":deger, "adresid":deger2},function() {
-		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/VarsayilanAdresYap2",{"uyeid":deger, "adresid":deger2},function() {
+			$.post("http://localhost/PROJELER/mvcproje/GenelGorev/VarsayilanAdresYap2",{"uyeid":deger, "adresid":deger2},function() {
 	
-		window.location.reload();
+				window.location.reload();
+		
+			});	
 		
 		});	
-		
-		});	
-		
-		
-		
+	
 	}
-
 
 function uyeyorumkontrol(yorumid,kriter) {
 
-		
-
 		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/uyeyorumkontrol",{"yorumid":yorumid, "kriter":kriter},function() {
 	
-		window.location.reload();
+			window.location.reload();
 		
 		});	
-		
-	
-		
-		
-		
+			
 	}
-
 
 function UrunSil(deger,kriter) {
 	
 	switch  (kriter) {
-		
-		
+	
 		case "sepetsil":
-		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/UrunSil",{"urunid":deger},function() {
+			
+			$.post("http://localhost/PROJELER/mvcproje/GenelGorev/UrunSil",{"urunid":deger},function() {
 		
-		window.location.reload();
+				window.location.reload();
 		
-		});	
-		
-		
+			});	
+
 		break;
 		
 		case "yorumsil":
-		
-		
-		
-		$.post("http://localhost/PROJELER/mvcproje/uye/Yorumsil",{"yorumid":deger},function(donen) {
+
+			$.post("http://localhost/PROJELER/mvcproje/uye/Yorumsil",{"yorumid":deger},function(donen) {
 			
-			
-			
-			if (donen)  {				
-				$("#Sonuc").html("Yorum başarıyla silindi.");				
-			}
-			else
-			{
-				$("#Sonuc").html("Silme işleminde hata oluştu.");
+				if (donen)  {				
 					
-			}
+					$("#Sonuc").html("Yorum başarıyla silindi.");
+					
+				} else{
+				
+					$("#Sonuc").html("Silme işleminde hata oluştu.");
+					
+				}
 		
 				$("#Sonuc").fadeIn(1000,function() {
 						
-						$("#Sonuc").fadeOut(1000,function() {
-							$("#Sonuc").html("");
-							window.location.reload();				
+					$("#Sonuc").fadeOut(1000,function() {
+							
+						$("#Sonuc").html("");
+							
+						window.location.reload();				
 					
 						});
-				
-				
-					
+
 				});
 		
-		
-		
-		});	
-		
+			});	
 		
 		break;
 		
 		case "adresSil":
-		$.post("http://localhost/PROJELER/mvcproje/uye/adresSil",{"adresid":deger},function(donen) {
 		
-		
-			if (donen)  {				
-				$("#Sonuc").html("Adres başarıyla silindi.");				
-			}
-			else
-			{
-				$("#Sonuc").html("Silme işleminde hata oluştu.");
-					
-			}
+			$.post("http://localhost/PROJELER/mvcproje/uye/adresSil",{"adresid":deger},function(donen) {
+			
+				if (donen)  {				
+				
+					$("#Sonuc").html("Adres başarıyla silindi.");				
+			
+				} else{
+				
+					$("#Sonuc").html("Silme işleminde hata oluştu.");
+			
+				}
 		
 				$("#Sonuc").fadeIn(1000,function() {
-						
-						$("#Sonuc").fadeOut(1000,function() {
-							$("#Sonuc").html("");
-							window.location.reload();				
+
+					$("#Sonuc").fadeOut(1000,function() {
+							
+						$("#Sonuc").html("");
+							
+						window.location.reload();				
 					
-						});
-				
-				
+					});
 					
 				});
 		
-		
-		
-		
-		
-		});	
-		
-		
+			});	
+
 		break;
-		
-		
 	
-	
-		
 	}
-	
-	
-	
-	
-	
+
 }
 
 function BilgiPenceresi(linkAdres,sonucbaslik,sonucmetin,sonuctur) {
-	
-	 swal(sonucbaslik, sonucmetin, sonuctur, {
-  buttons: {
-    
-    catch: {
-      text: "KAPAT",
-      value: "tamam",
-    }
-  },
-})
-.then((value) => {
-if (value=="tamam") {
-   window.location.href =  linkAdres;
-  }		
+
+	swal(sonucbaslik, sonucmetin, sonuctur, {
   
-});
+		buttons: {
+
+			catch: {
+
+				text: "KAPAT",
+      
+				value: "tamam",
+    
+			}
+  
+		},
+
+	})
+
+		.then((value) => {
+
+		if (value=="tamam") {
+   
+			window.location.href =  linkAdres;
+  
+		}		
+  
+	});
 	
 }
 
 function silmedenSor (gidilecekLink) {
-	
-  swal({
-  title: "Silmek istediğine emin misin?",
-  text: "Silinen kayıt geri alınamaz.",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
-})
-.then((willDelete) => {
-  if (willDelete) {
-     window.location.href =  gidilecekLink; 
-  } else {
-    swal({title:"Silme işleminden vazgeçtiniz", icon: "warning",});
-  }
-});
+
+	swal({
+  
+		title: "Silmek istediğine emin misin?",
+  
+		text: "Silinen kayıt geri alınamaz.",
+  
+		icon: "warning",
+  
+		buttons: true,
+  
+		dangerMode: true,
+
+	})
+
+		.then((willDelete) => {
+  
+		if (willDelete) {
+     
+			window.location.href =  gidilecekLink; 
+  
+		} else {
+    
+			swal({title:"Silme işleminden vazgeçtiniz", icon: "warning",});
+  
+		}
+
+	});
 	
 }
 

@@ -409,7 +409,61 @@ Cookie::SepeteEkle($this->form->get("id")->bosmu(),$this->form->get("adet")->bos
 		
 }//ÜYE YORUMLARI ONAY İŞLEVİ
 	
-	
+	function selectkontrol() {
+		
+		$anaid=$_POST["anaid"];
+		$cocukid=$_POST["cocukid"];
+		
+		
+		if ($_POST["kriter"]=="cocukgetir") :
+		$gelendeger=$this->model->Verial("cocuk_kategori","where ana_kat_id=".$anaid);
+			
+			
+			foreach ($gelendeger as $deger):
+			
+			Form::OlusturOption(array("value"=>$deger["id"]),false,$deger["ad"]);	
+				
+			endforeach;
+		endif;
+		if ($_POST["kriter"]=="altgetir") :
+		$gelendeger=$this->model->Verial("alt_kategori","where cocuk_kat_id=".$cocukid);
+			
+			
+			foreach ($gelendeger as $deger):
+			
+			Form::OlusturOption(array("value"=>$deger["id"]),false,$deger["ad"]);	
+				
+			endforeach;
+		
+		
+		endif;
+		//--------------ANA EKRAN KONTROLLERİ BAŞLIYOR--------------
+		
+		
+		if ($_POST["kriter"]=="anaekrancocukgetir") :
+		$gelendeger=$this->model->Verial("cocuk_kategori","where ana_kat_id=".$anaid);
+			
+			
+			foreach ($gelendeger as $deger):
+			
+			Form::OlusturOption(array("value"=>$deger["id"]),false,$deger["ad"]);	
+				
+			endforeach;
+		endif;
+		if ($_POST["kriter"]=="anaekranaltgetir") :
+		$gelendeger=$this->model->Verial("alt_kategori","where cocuk_kat_id=".$cocukid);
+			
+			
+			foreach ($gelendeger as $deger):
+			
+			Form::OlusturOption(array("value"=>$deger["id"]),false,$deger["ad"]);	
+				
+			endforeach;
+		
+		
+		endif;
+		
+	}
 	
 }
 
