@@ -2,6 +2,7 @@
 
 class adminpanel_model extends Model {
 	
+	public $basliklar,$icerikler;
 	
 	function __construct() {		
 		parent:: __construct();
@@ -48,11 +49,13 @@ class adminpanel_model extends Model {
 		return $this->db->giriskontrol($tabloisim,$kosul);		
 		
 	}
+	
 	function sayfalama($tabload) {
 		
 		return $this->db->sayfalamaAdet($tabload);
 		
 	}
+	
 	function tekliveri($sutun,$kosul) {
 		
 		return $this->db->teklistele($sutun,$kosul);
@@ -65,6 +68,22 @@ class adminpanel_model extends Model {
 		return $this->db->joinislemi($istenilenveriler,$tablolar,$kosul);
 	}
 	
+	function ExcelAyarCek($tabloisim,$kosul,$bolum) {
+		
+		switch($bolum):
+
+		case "bulten":
+			foreach ($this->db->listele($tabloisim,$kosul) as $degerler):
+		
+			$this->icerikler[]=array($degerler["mailadres"]);
+		
+		endforeach;
+		break;
+		
+		endswitch;
+		
+		
+	}
 }
 
 

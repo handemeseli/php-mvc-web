@@ -7,7 +7,7 @@ class panel extends Controller  {
 	
 	function __construct() {
 		
-		parent::KutuphaneYukle(array("view","form","bilgi","Upload","Pagination"));
+		parent::KutuphaneYukle(array("view","form","bilgi","Upload","Pagination","Excel"));
 		
 	$this->Modelyukle('adminpanel');
 	Session::init();
@@ -1275,13 +1275,21 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 		$this->view->goster("YonPanel/sayfalar/bulten",array(
 		
-		"data" => $this->model->Verial("bulten",false),
+		"data" => $this->model->Verial("bulten",false)
 		
 		));
 	
 	
 		
 	}  // BÜLTEN GELİYOR
+	
+	function bultenExcelAl () {
+		
+		$this->model->ExcelAyarCek("bulten",false,"bulten");
+		
+		$this->Excel->Excelaktar("Bültendeki Mailler",NULL,array("Mail Adresi"),$this->model->icerikler);
+		
+	}  // BÜLTEN EXCEL
 	
 	function mailSil($id) {
 	

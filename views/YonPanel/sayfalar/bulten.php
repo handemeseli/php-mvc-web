@@ -40,10 +40,11 @@
        <div class="row text-left border-bottom-mvc mb-2">  
        
         	 <div class="col-lg-2 col-xl-2 col-md-12 mb-12 border-left-mvc text-left p-2 mb-2"><h1 class="h3 mb-0 text-gray-800"> <i class="fas fa-th basliktext"></i> BÜLTEN  </h1></div>
-              
+              <div class="col-lg-1 col-xl-1 col-md-12 mb-12 p-2">
+    <a href="<?php echo URL; ?>/panel/bultenExcelAl" class="fas fa-file-export   silbuton"></a></div>
  
-    <div class="col-lg-2 col-xl-2 col-md-12 mb-12 p-2">
-    <h5 class=" mb-0 pt-1 text-gray-800">Toplam Mail : <?php echo count($veri["data"]); ?></h5></div>  
+    <div class="col-lg-1 col-xl-1 col-md-12 mb-12 p-2">
+    <h5 class=" mb-0 pt-1 text-gray-800">Toplam : <?php echo count($veri["data"]); ?></h5></div>  
 
              
         
