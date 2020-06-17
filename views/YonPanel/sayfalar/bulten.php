@@ -40,11 +40,9 @@
        <div class="row text-left border-bottom-mvc mb-2">  
        
         	 <div class="col-lg-2 col-xl-2 col-md-12 mb-12 border-left-mvc text-left p-2 mb-2"><h1 class="h3 mb-0 text-gray-800"> <i class="fas fa-th basliktext"></i> BÜLTEN  </h1></div>
-              <div class="col-lg-1 col-xl-1 col-md-12 mb-12 p-2">
-    <a href="<?php echo URL; ?>/panel/bultenExcelAl" class="fas fa-file-export   silbuton"></a></div>
+            
  
-    <div class="col-lg-1 col-xl-1 col-md-12 mb-12 p-2">
-    <h5 class=" mb-0 pt-1 text-gray-800">Toplam : <?php echo count($veri["data"]); ?></h5></div>  
+    
 
              
         
@@ -128,7 +126,30 @@
      
      
     
-     </div>    
+     </div>  
+		     <div class="col-lg-2 col-xl-2 col-md-12 mb-12 text-right">
+
+		   
+		   <div class="dropdown shop">
+				  
+				 <a class="btn btn-sm btn-mvc dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-hashpopup="true" aria-expanded="false">
+			   Dosya
+			   </a>
+			   
+			   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			   <a class="dropdown-item" href="<?php echo URL; ?>/panel/bultenExcelAl"><i class="fas fa-file-export text-dark "></i> Excel</a>
+				   
+				   
+				 
+			   <a class="dropdown-item" href="<?php echo URL; ?>/panel/bultenTxtAl"><i class="fas fa-file-alt text-dark "></i> Txt</a>   
+				  
+				  
+				  </div>
+		
+			   
+				  </div>
+		  
+		   		   </div>
        
           </div>
           <!-- BAŞLIK --> 	
@@ -139,7 +160,10 @@
       	<!-- SİPARİŞİN İSKELETİ BAŞLIYOR -->
         		 <div class="row arkaplan p-1 mt-2 pb-0">
                  	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 border-right p-2 pt-3 geneltext bg-gradient-mvc">
-                    <span>MAİLLER</span> 
+                    <span>MAİLLER -</span> Toplam mail sayısı: <?php echo count($veri["data"]);?>
+						
+						
+						
                     </div>
                
                

@@ -126,25 +126,39 @@ class  PanelHarici  extends Model{
 		
 		if ($this->sistemayarYonetim==1) :?>
 		
-		<li class="nav-item">
-        	<a class="nav-link" href="<?php echo URL."/panel/sistemayar";  ?>">
-          		<i class="fas  fa-cogs"></i>
+		
+	<li class="nav-item">
+        	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsesistemayar" aria-expanded="true" aria-controls="collapseTwo">
+          		<i class="fas fa-hand-holding-usd"></i>
           	<span>Sistem Ayarları</span></a>
+        		<div id="collapsesistemayar" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          			<div class="bg-white py-2 collapse-inner rounded">
+						
+						
+						
+            			<a class="collapse-item" href="<?php echo URL."/panel/sistemayar";  ?>">Ayarlar</a>
+						
+						
+            			<a class="collapse-item" href="<?php echo URL."/panel/sistembakim";  ?>">Bakim</a>
+						
+						<a class="collapse-item" href="<?php echo URL."/panel/veritabaniyedek";  ?>">Veritabani Yedek</a>
+            		</div>
+        		</div>
       	</li>
 
-		<?php
-		endif;
-		
-		if ($this->sistembakimYonetim==1) :?>
-		
-		<li class="nav-item">
-        	<a class="nav-link" href="<?php echo URL."/panel/sistembakim";  ?>">
-          		<i class="fas  fa-wrench"></i>
-          	<span>Sistem Bakım</span></a>
-      	</li>
 
-		<?php
+
+<?php
 		endif;
+
+
+
+
+
+
+
+
+
 		
 		
       
@@ -171,7 +185,12 @@ class  PanelHarici  extends Model{
 	}
 		
 		
+		function tekverial($tabload) {
 		
+		return $this->db->listele($tabload);
+		
+		
+	}
  
 }
 

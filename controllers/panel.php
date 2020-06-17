@@ -7,7 +7,7 @@ class panel extends Controller  {
 	
 	function __construct() {
 		
-		parent::KutuphaneYukle(array("view","form","bilgi","Upload","Pagination","Excel"));
+		parent::KutuphaneYukle(array("view","form","bilgi","Upload","Pagination","dosyacikti"));
 		
 	$this->Modelyukle('adminpanel');
 	Session::init();
@@ -1287,9 +1287,16 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 		$this->model->ExcelAyarCek("bulten",false,"bulten");
 		
-		$this->Excel->Excelaktar("Bültendeki Mailler",NULL,array("Mail Adresi"),$this->model->icerikler);
+		$this->dosyacikti->Excelaktar("Bültendeki Mailler",NULL,array("Mail Adresi"),$this->model->icerikler);
 		
-	}  // BÜLTEN EXCEL
+	}  // BÜLTEN EXCEL 
+		function bultenTxtAl () {
+		
+		
+		
+		$this->dosyacikti->txtolustur($this->model->Verial("bulten",false));
+		
+	}  // BÜLTEN TXT ÇIKTI
 	
 	function mailSil($id) {
 	
@@ -1555,7 +1562,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 			
 			if ($_POST["sistembtn"]):
 			
-			$bakim=$this->model->bakim("mvcproje");
+			$bakim=$this->model->bakim(DB_NAME);
 		
 	
 				if ($bakim):
@@ -1584,6 +1591,111 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	} //SİSTEM BAKIM SONUÇ
 	
+		function veritabaniyedek () {
+		
+		$this->yetkikontrol->YetkisineBak("sistembakimYonetim");
+		
+		$this->view->goster("YonPanel/sayfalar/yedek",array(
+		
+		"veritabaniyedek" => true
+		
+		));
+	
+	
+		
+	}  // VERİTABANI YEDEK
+	
+	function dbyedekal($deger) {
+		$this->dosyacikti->veritabaniyedekindir($deger);
+		
+	}
+	
+	
+		
+	
+	function yedekal () {
+		
+			$this->yetkikontrol->YetkisineBak("sistembakimYonetim");
+			
+			if ($_POST["sistembtn"]):
+			
+			$yedek=$this->model->yedek(DB_NAME);
+		
+				$yedektercih=$this->form->radiobutonget("yedektercih");
+				
+			if ($yedek[0]):		
+		
+		if($yedektercih=="local"):
+						
+			
+		
+			$olustur=fopen(YEDEKYOL.date("d.m.Y").".sql","w+");
+			fwrite($olustur,$yedek[1]);
+			fclose($olustur);
+			
+	
+			$this->view->goster("YonPanel/sayfalar/yedek",
+			array(
+			"bilgi" => $this->bilgi->SweetAlert(URL."/panel/veritabaniyedek","BAŞARILI","YEDEKLEME BAŞARIYLA YAPILDI","success")
+				 ));
+				
+		
+		
+				
+		
+		
+			else:
+				$this->dbyedekal($yedek[1]);
+		
+			endif;
+	
+		
+		
+				else:
+		
+			$this->view->goster("YonPanel/sayfalar/yedek",
+			array(
+			"bilgi" => $this->bilgi->SweetAlert(URL."/panel/veritabaniyedek","BAŞARISIZ","YEDEKLEME SIRASINDA HATA OLUŞTU","warning")
+				 ));	
+		
+		
+		
+		endif; 
+		
+				if($yedektercih=="local"):
+						
+			
+		
+			$olustur=fopen(YEDEKYOL.date("d.m.Y").".sql","w+");
+			fwrite($olustur,$yedek[1]);
+			fclose($olustur);
+			
+	
+			$this->view->goster("YonPanel/sayfalar/yedek",
+			array(
+			"bilgi" => $this->bilgi->SweetAlert(URL."/panel/veritabaniyedek","BAŞARILI","YEDEKLEME BAŞARIYLA YAPILDI","success")
+				 ));
+				
+		
+		
+				
+		
+		
+			else:
+				$this->dbyedekal($yedek[1]);
+		
+			endif;
+	
+		
+		
+				
+			else:
+			$this->bilgi->direktYonlen("/panel/veritabaniyedek");
+			
+			endif;		
+	
+		
+	} //veritabanı yedek sonuç	
 	//--------------------------------------------------------------------------------------
 
 	

@@ -13,6 +13,11 @@ class adminpanel_model extends Model {
 		return $this->db->sistembakim($deger);
 		
 	}
+		function yedek($deger) {
+		
+		return $this->db->veritabaniyedek($deger);
+		
+	}
 	
 	function Verial($tabloisim,$kosul) {
 		

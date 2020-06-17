@@ -171,7 +171,7 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 	
 	function sistembakim ($deger) {
 		$sorgu=$this->prepare('SHOW TABLES');
-		$sorgu->execute();
+		
 		
 		if ($sorgu->execute()) : 
 			$tablolar=$sorgu->fetchAll();
@@ -185,6 +185,9 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 				
 
 					endforeach; 
+					$tarih=date("d.m.Y-H:i");
+					$zamanguncelle=$this->prepare("update ayarlar set bakimzaman='$tarih'");
+					$zamanguncelle->execute();			
 					return true;
 			
 		else:		
@@ -192,7 +195,7 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 		
 		endif;
 		
-		$tablolar=$sorgu->fetchAll();
+	
 		
 	
 		
@@ -201,6 +204,91 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 		
 		
 	}//SİSTEM BAKIM
+		
+	
+	function veritabaniyedek ($deger) {
+		$tables=array();
+		
+		$sorgu=$this->prepare('SHOW TABLES');
+		if($sorgu->execute()): $durum=true; else: $durum=false; endif;
+		
+		
+		while($row=$sorgu->fetch(PDO::FETCH_ASSOC)):
+		$tables[]=$row["Tables_in_".$deger.""];
+		
+		endwhile;
+		
+		$return="SET NAMES utf8;";
+		
+		foreach ($tables as $tablo):
+		$result=$this->prepare('select * from $tablo');
+		$result->execute();
+		$numColumns=$result->columnCount();
+		
+		$return.="DROP TABLE IF EXIST $tablo;";
+		
+		$result2=$this->prepare("SHOW CREATE TABLE $tablo");
+		$result2->execute();
+		$row2=$result2->fetch(PDO::FETCH_ASSOC);
+		$return.="\n\n".$row2["Create Table"].";\n\n";
+		
+		
+		for ($i=0; $i<$numColumns; $i++):
+		
+			while ($row = $result->fetch(PDO::FETCH_NUM)):
+				$return.="INSERT INTO $tablo VALUES(";
+		
+		
+					for($a=0; $a<$numColumns; $a++):
+		
+		if(isset($row[$a])): $return.='"'.$row[$a].'"'; else: $return.='""'; endif;
+		if($a< ($numColumns-1)): $return.=',';  endif;
+		
+		
+					endfor;
+		
+		
+		
+		
+		
+		
+		
+		$return.= ");\n";
+		
+		
+			endwhile;
+				
+		
+		
+		
+		
+		
+		endfor;
+		
+				$return.= "\n\n\n";
+		endforeach;
+		
+			if($durum): 
+					$tarih=date("d.m.Y-H:i");
+					$zamanguncelle=$this->prepare("update ayarlar set yedekzaman='$tarih'");
+					$zamanguncelle->execute();
+		
+		
+		endif;
+				
+		
+		return [$durum,$return] ;
+	
+		
+	
+		
+	
+		
+		 
+			
+		
+		
+	} //veritabanı yedek
 	
 	function sayfalamaAdet($tabload){
 		$cek=$this->prepare("select COUNT(*) AS toplam from ". $tabload);

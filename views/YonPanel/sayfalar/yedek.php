@@ -24,7 +24,7 @@
 				
 				endif;
 	  
-	  if (isset($veri["sistembakim"])) :
+	  if (isset($veri["veritabaniyedek"])) :
 
 	  
 	  
@@ -35,7 +35,7 @@
       
        <div class="row text-left border-bottom-mvc mb-2">  
        
-        	 <div class="col-xl-12 col-md-12 mb-12 border-left-mvc text-left p-2 mb-2"><h1 class="h3 mb-0 text-gray-800"> <i class="fas fa-th basliktext"></i>SİSTEM BAKIM</h1></div>
+        	 <div class="col-xl-12 col-md-12 mb-12 border-left-mvc text-left p-2 mb-2"><h1 class="h3 mb-0 text-gray-800"> <i class="fas fa-th basliktext"></i>VERİTABANİ YEDEK</h1></div>
               
  
           </div>
@@ -55,7 +55,7 @@
              
              			<div class="row bg-gradient-beyazimsi">
              
-             		<div class="col-lg-12 col-md-12 col-sm-12 bg-gradient-mvc pt-2 basliktext2"><h3>Sistemin Bakımını Yap</h3></div>
+             		<div class="col-lg-12 col-md-12 col-sm-12 bg-gradient-mvc pt-2 basliktext2"><h3>Yedeklemeyi Yap</h3></div>
                  
                   
                             
@@ -64,15 +64,21 @@
 				  	
 					 
 					  Form::Olustur("1",array(
-					 "action" => URL."/panel/bakimyap",
+					 "action" => URL."/panel/yedekal",
 					 "method" => "POST"				
-					 ));  
+					 )); 
+		echo" Local'e Kaydet"
+		.Form::Olustur("2",array("type"=>"radio","value"=>"local","name"=>"yedektercih"),FALSE,"checked");	
+				  
+				  echo" PC'e Kaydet"
+		.Form::Olustur("2",array("type"=>"radio","value"=>"pc","name"=>"yedektercih"));	
                     
- 		       
-                    
-               
-		
-			 Form::Olustur("2",array("type"=>"submit","value"=>"BAKIMI BAŞLAT","class"=>"btn btn-success","name"=>"sistembtn"));		
+ 		       ?>
+                    </div>  
+							 <div class="col-lg-12 col-md-12 col-sm-12 formeleman nocizgi">
+              <?php  
+			 
+	Form::Olustur("2",array("type"=>"submit","value"=>"YEDEKLEMEYİ BAŞLAT","class"=>"btn btn-success","name"=>"sistembtn"));		
 			 
 		 
 					 
@@ -82,7 +88,7 @@
 							<div class="col-lg-12 col-md-12 col-sm-12 formeleman nocizgi"><?php 	
 				  	
 					 $geldi= $PanelHarici->tekverial("ayarlar");
-	  				echo "Son bakım zamanı:".  $geldi[0]["bakimzaman"]; ?></div> 
+	  				echo "Son yedekleme zamanı:".  $geldi[0]["yedekzaman"]; ?></div> 
              
             
              

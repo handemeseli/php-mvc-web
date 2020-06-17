@@ -41,6 +41,11 @@ class Form extends Bilgi  {
 		return $_POST[$key];
 													
 	}
+	function radiobutonget ($key) {
+
+		return $_POST[$key];
+													
+	}
 	
 	function bosmu() {
 			
