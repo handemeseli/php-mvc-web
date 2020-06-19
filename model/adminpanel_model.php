@@ -13,7 +13,8 @@ class adminpanel_model extends Model {
 		return $this->db->sistembakim($deger);
 		
 	}
-		function yedek($deger) {
+	
+	function yedek($deger) {
 		
 		return $this->db->veritabaniyedek($deger);
 		
@@ -22,6 +23,12 @@ class adminpanel_model extends Model {
 	function Verial($tabloisim,$kosul) {
 		
 		return $this->db->listele($tabloisim,$kosul);
+		
+	}
+	
+	function SpesifikVerial($tabloisim) {
+		
+		return $this->db->spesifiklistele($tabloisim);
 		
 	}
 	
@@ -69,8 +76,8 @@ class adminpanel_model extends Model {
 	
 	function joinislemi($istenilenveriler,$tablolar,$kosul){
 		
-		
 		return $this->db->joinislemi($istenilenveriler,$tablolar,$kosul);
+		
 	}
 	
 	function ExcelAyarCek($tabloisim,$kosul,$bolum) {
@@ -89,6 +96,13 @@ class adminpanel_model extends Model {
 		
 		
 	}
+	
+	function ExcelAyarCek2($tabloisim) {
+		
+			$this->icerikler[]=$this->db->spesifiklistele($tabloisim);
+		
+	}
+	
 }
 
 

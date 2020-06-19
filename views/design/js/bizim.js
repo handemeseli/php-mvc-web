@@ -67,19 +67,54 @@ $(document).ready(function(e) {
 		$('#GuncelleformuAna input[type="checkbox"]').attr("checked",false);
 	});
 	
-	$('#detaygoster a').click(function() {
+	$('#detaygoster #adres').click(function() {
 		
 		var sipno=$(this).attr('data-value');
 		var adresid=$(this).attr('data-value2');
 		
 		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/teslimatgetir",{"sipno":sipno,"adresid":adresid},function(cevap) {
 			$(".modal-body").html(cevap);
+			$("#exampleModalLongTitle").html("Teslimat Adresi ve Kişisel Bilgiler");
+	
+		});
+	});
+		
+	$('#detaygoster #siparis').click(function() {
+		
+		var sipno=$(this).attr('data-value');
+		var adresid=$(this).attr('data-value2');
+		
+		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/siparisgetir",{"sipno":sipno,"adresid":adresid},function(cevap) {
+			$(".modal-body").html(cevap);
+			$("#exampleModalLongTitle").html("SİPARİŞ ÖZETİ");
 	
 		
-	});	
+	});
 		
-		
-		
+	});
+	
+	jQuery.fn.extend({
+		printElem: function() {
+			var cloned = this.clone();
+		var printSection = $('#printSection');
+		if (printSection.length == 0) {
+			printSection = $('<div id="printSection"></div>')
+			$('body').append(printSection);
+		}
+		printSection.append(cloned);
+		var toggleBody = $('body *:visible');
+		toggleBody.hide();
+		$('#printSection, #printSection *').show();
+		window.print();
+		printSection.remove();
+		toggleBody.show();
+		}
+	});
+
+	$(document).ready(function(){
+		$(document).on('click', '#btnPrint', function(){
+		$('#adres').printElem();
+	  });
 	});
 
 	$("#aramakutusu").attr("placeholder","Sipariş numarası");	

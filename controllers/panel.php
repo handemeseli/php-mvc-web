@@ -2,7 +2,7 @@
 
 class panel extends Controller  {
 	
-	public $yetkikontrol;
+	public $yetkikontrol,$aramadegeri;
 	
 	
 	function __construct() {
@@ -72,11 +72,9 @@ class panel extends Controller  {
 			
 	$this->view->goster("YonPanel/sayfalar/siparis",array(
 	
-	"data" => $this->model->Verial("siparisler","order by id desc")
+	"data" => $this->model->SpesifikVerial("siparis_no from siparisler")
 	
 	));		
-	
-	
 		
 	} // SİPARİŞLERİN ANA EKRANI	
 	
@@ -170,7 +168,7 @@ class panel extends Controller  {
 				if ($bilgicek):
 			
 				$this->view->goster("YonPanel/sayfalar/siparis",array(				
-				"data" => $bilgicek				
+				"data" => $this->model->arama("siparisler","uyeid LIKE '".$bilgicek[0]["id"]."'")				
 				));		
 				
 				else:
@@ -201,6 +199,126 @@ class panel extends Controller  {
 	
 		
 	} // SİPARİŞ ARAMA
+	
+	function siparisdetayliarama() {	
+	$this->yetkikontrol->YetkisineBak("siparisYonetim");
+	
+				
+
+		if ($_POST) :
+			$siparis_no=$this->form->get("siparis_no",true);		
+			$uyebilgi=$this->form->get("uyebilgi",true);		
+			$kargodurum=$this->form->get("kargodurum",true);	
+			$odemeturu=$this->form->get("odemeturu",true);	
+			$durum=$this->form->get("durum",true);			
+			$tarih1=$this->form->get("tarih1",true);		
+			$tarih2=$this->form->get("tarih2",true);	
+
+
+			if (!empty($siparis_no)) : 
+				$this->aramadegeri.="<strong>Sipariş Numarası :</strong> ".$siparis_no;	
+			endif;
+
+			if (!empty($kargodurum)) : 		
+					switch ($kargodurum):				
+					case "0";
+					$this->aramadegeri.="<strong>Kargo Durumu :</strong> Tedarik Sürecinde ";
+					break;
+					case "1";
+					$this->aramadegeri.="<strong>Kargo Durumu :</strong> Paketleniyor ";
+					break;
+					case "2";
+					$this->aramadegeri.="<strong>Kargo Durumu :</strong> Kargolandı ";
+					break;				
+					endswitch;
+				endif;
+
+			if (!empty($odemeturu)) : 
+				$this->aramadegeri.="<strong>Ödeme Türü :</strong> ".$odemeturu." ";	
+			endif;
+
+			if (!empty($durum)) : 		
+					switch ($durum):				
+					case "0";
+					$this->aramadegeri.="<strong>Sipariş Durumu :</strong> İşlemde ";
+					break;
+					case "1";
+					$this->aramadegeri.="<strong>Sipariş Durumu :</strong> Tamamlanmış ";
+					break;
+					case "2";
+					$this->aramadegeri.="<strong>Sipariş Durumu :</strong> İade ";
+					break;		
+					endswitch;
+				endif; 
+
+			if (!empty($tarih1) && !empty($tarih2)) :	
+				$tarihbilgisi="and	DATE(tarih) BETWEEN  '".$tarih1."' and '".$tarih2."'";			
+				$this->aramadegeri.="<strong>Başlangıç tarihi :</strong> ".$tarih1 ." <strong>Bitiş tarihi :</strong> ".$tarih2;
+			endif;
+		
+			if (!empty($uyebilgi)) :				
+				$bilgicek=$this->model->Arama("uye_panel",
+				"id LIKE '%".$uyebilgi."%' or 
+				ad LIKE '%".$uyebilgi."%'  or 
+				soyad LIKE '%".$uyebilgi."%' or 
+				telefon LIKE '%".$uyebilgi."%'");
+		
+						if ($bilgicek):		
+						$this->view->goster("YonPanel/sayfalar/siparisdetayarama",array(			
+						"data" => $this->model->Arama("siparisler",
+						"uyeid='".$bilgicek[0]["id"]."' and
+						siparis_no LIKE '%".$siparis_no."%' and
+						kargodurum LIKE '%".$kargodurum."%' and
+						odemeturu LIKE '%".$odemeturu."%' and
+						durum LIKE '%".$durum."%' ".@$tarihbilgisi."
+						"),
+						"aramakriter" => $this->aramadegeri
+						));						
+						endif;
+
+				elseif (!empty($siparis_no)) :				
+				$this->view->goster("YonPanel/sayfalar/siparisdetayarama",array(				
+					"data" => $this->model->Arama("siparisler","siparis_no LIKE ".$siparis_no),
+					"aramakriter" => $this->aramadegeri
+						));
+				else:
+					$this->view->goster("YonPanel/sayfalar/siparisdetayarama",array(			
+						"data" => $this->model->Arama("siparisler",
+						"kargodurum LIKE '%".$kargodurum."%' and
+						odemeturu LIKE '%".$odemeturu."%' and
+						durum LIKE '%".$durum."%' ".@$tarihbilgisi."
+						"),
+						"aramakriter" => $this->aramadegeri
+						));	
+				endif;
+
+		else:
+			$this->view->goster("YonPanel/sayfalar/siparisdetayarama",array(	
+			"varsayilan" => true
+			));			
+		endif;
+		
+	} // SİPARİŞ  DETAYLI ARAMA*/
+	
+	function siparisExcelAl () {
+		
+		$this->yetkikontrol->YetkisineBak("siparisYonetim");
+		$gelennumaralar=Session::get("numaralar");
+		$this->model->ExcelAyarCek2("siparis_no,urunad,urunadet,urunfiyat,toplamfiyat,kargodurum,odemeturu,durum,tarih from siparisler where siparis_no IN(".$gelennumaralar.")");
+		
+		$this->dosyacikti->Excelaktar("SİPARİŞLER",NULL,
+		array("Sipariş Numarası",
+			  "Ürün Ad",
+			  "Ürün Adet",
+			  "Ürün Fiyat",
+			  "Toplam Fiyat",
+			  "Kargo Durum",
+			  "Ödeme Türü",
+			  "Durum",
+			  "Tarih"
+			  ),$this->model->icerikler[0]);
+		
+	}  // SİPARİŞ EXCEL ÇIKTI
 	
 	//--------------------------------------------------------------------------------------
 	
@@ -1289,8 +1407,9 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 		$this->dosyacikti->Excelaktar("Bültendeki Mailler",NULL,array("Mail Adresi"),$this->model->icerikler);
 		
-	}  // BÜLTEN EXCEL 
-		function bultenTxtAl () {
+	}  // BÜLTEN EXCEL ÇIKTI
+	
+	function bultenTxtAl () {
 		
 		
 		
@@ -1555,7 +1674,6 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	}  // SİSTEM BAKIM
 		
-	
 	function bakimyap () {
 		
 			$this->yetkikontrol->YetkisineBak("sistembakimYonetim");
@@ -1591,7 +1709,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	} //SİSTEM BAKIM SONUÇ
 	
-		function veritabaniyedek () {
+	function veritabaniyedek () {
 		
 		$this->yetkikontrol->YetkisineBak("sistembakimYonetim");
 		
@@ -1609,9 +1727,6 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		$this->dosyacikti->veritabaniyedekindir($deger);
 		
 	}
-	
-	
-		
 	
 	function yedekal () {
 		
@@ -1696,9 +1811,9 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 		
 	} //veritabanı yedek sonuç	
+	
 	//--------------------------------------------------------------------------------------
 
-	
 	/*
 	function kayitkontrol() {
 	

@@ -32,17 +32,23 @@ class  PanelHarici  extends Model{
 
 	}
 	
-
 	function MenuKontrol () {
 		
 		if ($this->siparisYonetim==1) :?>
-		
+
 		<li class="nav-item">
-        	<a class="nav-link" href="<?php echo URL."/panel/siparisler";  ?>">
+        	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsesiparisler" aria-expanded="true" aria-controls="collapseTwo">
           		<i class="fas fa-donate"></i>
           	<span>Sipariş Yönetimi</span></a>
+        		<div id="collapsesiparisler" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          			<div class="bg-white py-2 collapse-inner rounded">
+            			<a class="collapse-item" href="<?php echo URL."/panel/siparisler";  ?>">Siparişler</a>
+						<a class="collapse-item" href="<?php echo URL."/panel/siparisiade";  ?>">İade İşlemleri</a>
+            			<a class="collapse-item" href="<?php echo URL."/panel/siparisdetayliarama";  ?>">Detaylı Arama</a>
+          			</div>
+        		</div>
       	</li>
-
+		
 		<?php
 		endif;
 		
@@ -152,17 +158,7 @@ class  PanelHarici  extends Model{
 		endif;
 
 
-
-
-
-
-
-
-
-		
-		
-      
-		
+	
 		
 	} //MENÜ KONTROL
 	
@@ -183,12 +179,23 @@ class  PanelHarici  extends Model{
 		
 		return $this->db->joinislemi($istenilenveriler,$tablolar,$kosul);
 	}
-		
-		
-		function tekverial($tabload) {
+			
+	function tekverial($tabload) {
 		
 		return $this->db->listele($tabload);
 		
+		
+	}
+	
+	function joinislemi($istenilenveriler,$tablolar,$kosul){
+		
+		return $this->db->joinislemi($istenilenveriler,$tablolar,$kosul);
+		
+	}
+	
+	function Verial($tabloisim,$kosul) {
+		
+		return $this->db->listele($tabloisim,$kosul);
 		
 	}
  

@@ -1,5 +1,5 @@
 
-<!-- The modal -->
+<!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
@@ -10,8 +10,10 @@
 <h4 class="modal-title" id="modalLabel">Teslimat adresi ve kişisel bilgiler</h4>
 </div>
 <div class="modal-body">
-Modal content...
+...
 </div>
+	
+
 
 </div>
 </div>

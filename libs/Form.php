@@ -2,19 +2,23 @@
 
 class Form extends Bilgi  {
 	
-		public $deger,$veri;
+		public $deger,$veri,$tercih;
 		public $error=array(),$sonuc=array();
 
 		
-	function get ($key) {
+	function get ($key,$tercih=false) {
 			
+		if ($tercih):
+			$this->veri=htmlspecialchars(strip_tags($_POST[$key]));
+			
+			return $this->veri;
+		else:
 			$this->deger=$key;
-					
-			
+						
 			$this->veri=htmlspecialchars(strip_tags($_POST[$key]));
 			
 			return $this;
-			
+		endif;
 			
 		}
 		
@@ -41,6 +45,7 @@ class Form extends Bilgi  {
 		return $_POST[$key];
 													
 	}
+	
 	function radiobutonget ($key) {
 
 		return $_POST[$key];
@@ -109,7 +114,6 @@ class Form extends Bilgi  {
 			
 			
 		} // şifreler uyuşuyor mu
-		
 		
 	public static function Olustur($kriter,array $veri=NULL,$textmetin=false,$check=false) {
 		
@@ -210,27 +214,10 @@ class Form extends Bilgi  {
 		endforeach;
 		echo "> ".$optionmetin."</option>";	
 
-		
-		
-		
-	
-
-				
-		
-		
 	
 	}
 	
 
-	
-	
-				
-		
-
-		
-		
-		
-		
 	
 
 	

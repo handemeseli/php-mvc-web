@@ -88,7 +88,8 @@
 							<div class="col-lg-12 col-md-12 col-sm-12 formeleman nocizgi"><?php 	
 				  	
 					 $geldi= $PanelHarici->tekverial("ayarlar");
-	  				echo "Son yedekleme zamanı:".  $geldi[0]["yedekzaman"]; ?></div> 
+								
+	  				//echo "Son yedekleme zamanı:".  $geldi[0]["yedekzaman"]; ?></div> 
              
             
              

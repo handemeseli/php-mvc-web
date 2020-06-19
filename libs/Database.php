@@ -62,6 +62,27 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 		
 	} // listeleme
 	
+	function spesifiklistele($sorgu,$kosul=false) {
+		
+		
+		if ($kosul==false) :
+		
+		$sorgum="select ".$sorgu;
+		
+		else:
+		
+		$sorgum="select * from ".$tabloisim." ".$kosul;
+												
+		endif;
+		
+		$son=$this->prepare($sorgum);
+		$son->execute();
+		
+		return $son->fetchAll();
+		
+		
+	} // spesifik listeleme
+	
 	function teklistele($sutun,$kosul) {
 
 	
@@ -72,8 +93,7 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 		
 		
 	} //tekli listeleme
-	
-	
+		
 	function sil($tabloisim,$kosul) {
 		
 		$sorgum=$this->prepare("delete from ".$tabloisim. ' where '.$kosul);
@@ -153,7 +173,6 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 		
 	} // giriş kontrol
 	
-	
 	function siparisTamamla($veriler=array()) {
 		
 
@@ -167,8 +186,7 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 		
 		
 	}
-	
-	
+		
 	function sistembakim ($deger) {
 		$sorgu=$this->prepare('SHOW TABLES');
 		
@@ -204,8 +222,7 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 		
 		
 	}//SİSTEM BAKIM
-		
-	
+			
 	function veritabaniyedek ($deger) {
 		$tables=array();
 		

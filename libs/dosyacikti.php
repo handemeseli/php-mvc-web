@@ -1,6 +1,6 @@
 <?php
 
-class  Dosyacikti {
+class  dosyacikti {
 	
 	function Excelaktar($tablobasligi,array $enaltsatir=NULL,$columns=array(),$data=array())
 
@@ -23,7 +23,7 @@ class  Dosyacikti {
 
 		foreach ($columns as $veri):
 
-			echo '<td style="background-color:#ddb446">'.trim($veri)."</td>";
+			echo '<td style="background-color:#ddb446">'.trim($veri).'</td>';
 
 		endforeach;
 
@@ -37,7 +37,7 @@ class  Dosyacikti {
 
 					for($i=0; $i<$sayim; $i++):
 
-					echo '<td>'.$val[$i]."</td>";
+					echo '<td>'.$val[$i].'</td>';
 
 					endfor;			
 
@@ -51,7 +51,7 @@ class  Dosyacikti {
 
 				foreach ($enaltsatir as $veri):
 
-					echo '<td style="background-color:#ddb446">'.trim($veri)."</td>";
+					echo '<td style="background-color:#ddb446">'.trim($veri).'</td>';
 
 				endforeach;
 

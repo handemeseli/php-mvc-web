@@ -217,4 +217,33 @@
 		
 	
  }
+
+  /* SİPARİŞ DETAYLI ARAMA KODLARI */
+   .arama-btn-mvc{color:#fff;background-color:#582975;border-color:#2e0549; height:60px; }.arama-btn-mvc:hover{color:#fff;background-color:#2e0549;border-color:#582975}.arama-btn-mvc.focus,.arama-btn-mvc:focus{-webkit-box-shadow:0 0 0 .2rem rgba(62,208,156,.5);box-shadow:0 0 0 .2rem rgba(62,208,156,.5)}.arama-btn-mvc.disabled,.arama-btn-mvc:disabled{color:#fff;background-color:#2e0549;border-color:#2e0549}.arama-btn-mvc:not(:disabled):not(.disabled).active,.arama-btn-mvc:not(:disabled):not(.disabled):active,.show>.arama-btn-mvc.dropdown-toggle{color:#fff;background-color:#582975;border-color:#2e0549}.arama-btn-mvc:not(:disabled):not(.disabled).active:focus,.arama-btn-mvc:not(:disabled):not(.disabled):active:focus,.show>.arama-btn-mvc.dropdown-toggle:focus{-webkit-box-shadow:0 0 0 .2rem rgba(62,208,156,.5);box-shadow:0 0 0 .2rem rgba(62,208,156,.5)}
+   
+     .arama-bg-gradient{
+	 background: rgb(215,215,215);
+background: linear-gradient(90deg, rgba(215,215,215,1) 0%, rgba(218,223,222,1) 47%, rgba(215,215,215,1) 100%);
+	border:1px solid  #D5D1D1;
+	border-radius:5px;
+	overflow:hidden;
+	}
+	.arama-bg-gradient .eleman1{
+
+	border-right:1px solid  #D5D1D1;
+	border-bottom:1px solid  #D5D1D1;
+	color: #582975;
+	font-weight: 800;
+
+	}
+	.arama-bg-gradient .eleman2{
+
+	border-right:1px solid  #D5D1D1;
+	border-bottom:1px solid  #D5D1D1;
+
+	}
+	.arama-bg-gradient  .noaltcizgi {
+	border-bottom:none;
+	
+	}
  

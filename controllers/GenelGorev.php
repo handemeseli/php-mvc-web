@@ -154,7 +154,6 @@ class GenelGorev extends Controller  {
 		
 	} // iletisim formu
 	
-	
 	function SepeteEkle() {
 		// form buraya gelecek buradan id ve adet eklenecek
 
@@ -187,7 +186,6 @@ Cookie::SepeteEkle($this->form->get("id")->bosmu(),$this->form->get("adet")->bos
 		Cookie::SepetiBosalt();
 		
 	}
-	
 	
 	function SepetKontrol() {
 		
@@ -316,6 +314,121 @@ Cookie::SepeteEkle($this->form->get("id")->bosmu(),$this->form->get("adet")->bos
 
 		
 	}// YÖNETİM PANELİ TESLİMAT GETİR
+	
+	function siparisgetir ()  {
+		
+		if ($_POST) :		
+		
+		$sipno=$this->form->get("sipno")->bosmu();
+		$adresid=$this->form->get("adresid")->bosmu();
+		
+		
+		$siparisGetir=$this->model->Verial("siparisler","where siparis_no=".$sipno);
+			
+			?>
+<div class="row arkaplan p-1 mt-2 pb-0 text-center">  
+
+<div class="col-lg-3 col-xl-3 col-md-3 geneltext2 "> <span>ÜRÜN AD</span> </div>
+<div class="col-lg-3 col-xl-3 col-md-3 geneltext2 "> <span>ÜRÜN ADET</span> </div>
+<div class="col-lg-3 col-xl-3 col-md-3 geneltext2 "> <span>ÜRÜN FİYAT</span> </div>
+<div class="col-lg-3 col-xl-3 col-md-3 geneltext2 "> <span>TOPLAM FİYAT</span> </div> 
+           </div> 
+	<?php
+	$toplam=array();
+	foreach ($siparisGetir as $deger):
+	
+		echo '<div class="row border border-light text-center">     
+<div class="col-lg-3 col-xl-3 col-md-3 text-dark kalinyap p-2">'.$deger["urunad"].'</div>
+<div class="col-lg-3 col-xl-3 col-md-3 text-dark kalinyap p-2">'.$deger["urunadet"].'</div>
+<div class="col-lg-3 col-xl-3 col-md-3 text-dark kalinyap p-2">
+'.number_format($deger["urunfiyat"],2,",",".").' TL</div>
+<div class="col-lg-3 col-xl-3 col-md-3 text-dark kalinyap p-2">'.number_format($deger["toplamfiyat"],2,",",".").' TL</div>             
+           </div> ';
+	$toplam[]=$deger["toplamfiyat"];	
+	endforeach;
+											
+			  ?>
+      
+      
+              <!-- TOPLAM FİYAT -->
+                     
+                   	<div class="row"> 
+                      
+                     
+                    <div class="col-lg-12  geneltext2 text-right kalinyap p-2 border-bottom border-secondary"><span >SİPARİŞ TOPLAMI
+					
+					<?php
+					print_r(number_format(array_sum($toplam),2,",","."). " TL");
+					
+					 ?></span></div>        
+                        
+                    </div>   
+                 <!-- TOPLAM FİYAT -->   
+                 
+               
+			        
+                   
+                   
+         <?php        
+                 
+                 
+	
+$teslimatbilgileriGetir=$this->model->Verial("teslimatbilgileri","where siparis_no=".$sipno);
+$AdresGetir=$this->model->Verial("adresler","where id=".$adresid);	
+				echo '<div class="row">		
+				<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 border-dark">
+					<div class="row">					
+							<div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 text-left">
+								<div class="row">
+							<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 border-bottom border-secondary mb-2 geneltext2">
+							<h5>KİŞİSEL BİLGİLER</h5>
+							</div>					
+							<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<span class="font-weight-bold">Ad : </span>'.$teslimatbilgileriGetir[0]["ad"].'
+							</div>
+							
+							
+								<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<span class="font-weight-bold">Soyad : </span>'.$teslimatbilgileriGetir[0]["soyad"].'
+							</div>
+							
+							
+							<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<span class="font-weight-bold">Mail :  </span>'.$teslimatbilgileriGetir[0]["mail"].'
+							</div>
+							
+							
+							<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<span class="font-weight-bold">Telefon : </span>'.$teslimatbilgileriGetir[0]["telefon"].'
+							</div>					
+					
+							</div>							
+							
+							</div>	
+							<hr>
+							<div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 text-left">
+								<div class="row">
+							<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 border-bottom border-secondary mb-2 geneltext2">
+							<h5>ADRES BİLGİSİ</h5>
+							</div>					
+							<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+							<span class="font-weight-bold">Adres : </span>'.$AdresGetir[0]["adres"].'
+							</div>
+					
+							</div>
+							</div>
+					
+					</div>	
+				</div>
+		</div>';
+	
+	else:	
+	
+		$this->bilgi->direktYonlen("/");
+	
+	endif;
+		
+	}// YÖNETİM PANELİ SİPARİŞ YAZDIR
 	
 	function VarsayilanAdresYap(){
 			if ($_POST) :
