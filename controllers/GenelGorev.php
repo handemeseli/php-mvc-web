@@ -430,6 +430,66 @@ $AdresGetir=$this->model->Verial("adresler","where id=".$adresid);
 		
 	}// YÖNETİM PANELİ SİPARİŞ YAZDIR
 	
+	function iadeislemi() {
+			
+		if ($_POST) :
+		
+		
+		$sipno=$this->form->get("sipno")->bosmu();		
+
+		$iadeguncelleme=$this->model->Guncelle("siparisler",array("durum"),array(2),"siparis_no=".$sipno);
+		
+			if($iadeguncelleme):
+
+			echo '<div class="alert alert-success text-center">İADE İŞLEMİ BAŞARILI</div>';
+
+			else:
+
+			echo '<div class="alert alert-danger text-center">İŞLEM SIRASINDA HATA OLDU</div>';
+
+			endif;
+		
+	
+		else:	
+
+			$this->bilgi->direktYonlen("/");
+
+		endif;
+	
+
+		
+	}// ARAYÜZ PANELİ İADE İŞLEMİ
+	
+	function paneliadeislemi() {
+			
+		if ($_POST) :
+		
+		
+		$sipno=$this->form->get("sipno")->bosmu();		
+
+		$iadeguncelleme=$this->model->Guncelle("siparisler",array("durum"),array(3),"siparis_no=".$sipno);
+		
+			if($iadeguncelleme):
+
+			echo '<div class="alert alert-success text-center">İADE İŞLEMİ BAŞARILI</div>';
+
+			else:
+
+			echo '<div class="alert alert-danger text-center">İŞLEM SIRASINDA HATA OLDU</div>';
+
+			endif;
+		
+	
+		else:	
+
+			$this->bilgi->direktYonlen("/");
+
+		endif;
+	
+
+		
+	}// YÖNETİM PANELİ İADE İŞLEMİ
+	
 	function VarsayilanAdresYap(){
 			if ($_POST) :
 		

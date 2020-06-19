@@ -12,21 +12,16 @@
       
 	<!-- BAŞLIK -->
       
-
- 
-       <div class="row text-center border-bottom-mvc mb-2">  
-       
-        	 <div class="col-lg-12 col-xl-12 col-md-12 mb-12 border-left-mvc text-center p-2 mb-2"><h1 class="h3 mb-0 text-gray-800"> <i class="fas fa-search basliktext"></i> SİPARİŞ ARAMA </h1></div>
-         </div>       
+<div class="row text-center border-bottom-mvc mb-2">  
+    <div class="col-lg-12 col-xl-12 col-md-12 mb-12 border-left-mvc text-center p-2 mb-2"><h1 class="h3 mb-0 text-gray-800"> <i class="fas fa-search basliktext"></i> SİPARİŞ ARAMA </h1></div>
+</div>  
+		  
  <div class="row text-left border-bottom-mvc mb-2 arama-bg-gradient"> 
  
       <div class="col-xl-11 col-md-9 mb-12 text-left   ">
      	<div class="row">
 					
-							<div class="col-xl-2  p-3 eleman1">
-							Sipariş Numarası
-							
-							</div>	
+							<div class="col-xl-2  p-3 eleman1">Sipariş Numarası</div>	
 							<div class="col-xl-2 p-2 eleman2">
 								  <?php
 	  
@@ -38,23 +33,15 @@
 							 ?>
 							
 							</div>	
-							
-							
-								<div class="col-xl-2 p-3 eleman1">
-							Üye Bilgisi
-							
-							</div>	
+														
+							<div class="col-xl-2 p-3 eleman1">Üye Bilgisi</div>	
 							<div class="col-xl-2 p-2 eleman2">
 							 <?php Form::Olustur("2",array("type"=>"text","name"=>"uyebilgi","class"=>"form-control p-1","placeholder"=>"Üye Bilgisi"));	
 							 ?>
 							
 							</div>	
-							
-							
-								<div class="col-xl-2 p-3 eleman1">
-							Kargo Durum
-							
-							</div>	
+														
+							<div class="col-xl-2 p-3 eleman1">Kargo Durum</div>	
 							<div class="col-xl-2 p-2 eleman2">
 							 <?php 
 							 
@@ -69,12 +56,8 @@
 							 ?>
 							
 							</div>	
-							
-							
-								<div class="col-xl-2 p-3 eleman1 noaltcizgi">
-							Ödeme Türü
-							
-							</div>	
+														
+							<div class="col-xl-2 p-3 eleman1 noaltcizgi">Ödeme Türü</div>	
 							<div class="col-xl-2 p-2 eleman2 noaltcizgi">
 							 <?php 						 
 			 Form::OlusturSelect("1",array("name"=>"odemeturu","class"=>"form-control p-1"));	 
@@ -86,10 +69,7 @@
 							
 							</div>	
 							
-						<div class="col-xl-2 p-3 eleman1 noaltcizgi">
-							Sipariş Durumu
-							
-							</div>	
+							<div class="col-xl-2 p-3 eleman1 noaltcizgi">Sipariş Durumu</div>	
 							<div class="col-xl-2 p-2 eleman2 noaltcizgi">
 							 <?php 						 
 			 Form::OlusturSelect("1",array("name"=>"durum","class"=>"form-control p-1"));
@@ -97,43 +77,31 @@
 			 Form::OlusturOption(array("value"=>"0"),false,"İşlemde");	
 			 Form::OlusturOption(array("value"=>"1"),false,"Tamamlanmış");
 			 Form::OlusturOption(array("value"=>"2"),false,"İade");
+			 Form::OlusturOption(array("value"=>"3"),false,"İade Onaylanmış");
 			 Form::OlusturSelect("2",null);	
 							 ?>
 							
 							</div>	
 							
-							
-								<div class="col-xl-2 p-2 eleman2 noaltcizgi">
-			<?php  Form::Olustur("2",array("type"=>"date","name"=>"tarih1","class"=>"form-control p-1"));	?>
-							
-							</div>	
 							<div class="col-xl-2 p-2 eleman2 noaltcizgi">
-							 <?php 						 
-	  Form::Olustur("2",array("type"=>"date","name"=>"tarih2","class"=>"form-control p-1"));
-							 ?>
-							
+			<?php  Form::Olustur("2",array("type"=>"date","name"=>"tarih1","class"=>"form-control p-1"));	?>
+							</div>	
+			
+							<div class="col-xl-2 p-2 eleman2 noaltcizgi">
+			<?php Form::Olustur("2",array("type"=>"date","name"=>"tarih2","class"=>"form-control p-1"));	?>
 							</div>	
 		
-
-        
         </div>
 
-     
-     
-    
      </div>  
 	 
-	 		   <div class="col-lg-1 col-xl-1 col-md-12 mb-12 p-2">
-	 <?php		
-			 Form::Olustur("2",array("type"=>"submit","value"=>"ARA","class"=>"btn btn-sm arama-btn-mvc btn-block mt-4"));
-			 	Form::Olustur("kapat");
-	 ?>
+	<div class="col-lg-1 col-xl-1 col-md-12 mb-12 p-2">
+	 <?php Form::Olustur("2",array("type"=>"submit","value"=>"ARA","class"=>"btn btn-sm arama-btn-mvc btn-block mt-4"));
+		   Form::Olustur("kapat");	?>
 	
 	</div> 
- 
- 
-       
-          </div>
+      
+</div>
           <!-- BAŞLIK --> 
 		  
 		  <?php 

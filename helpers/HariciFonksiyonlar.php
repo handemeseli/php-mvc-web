@@ -158,79 +158,34 @@ echo  '<li><a href="'.URL.'/urunler/kategori/'.$aktar3["id"].'/'.$this->seo($akt
 		
 	} // ÜRÜN ÇEK
 	
-	
 	function UyesiparisGetir($dizimiz) {
-		
-				
-		$dizi2=array();
-		$toplam=array();
-		$dongusayisi=0;
-		$satirsayi=count($dizimiz);
-		$izin=false;
-		
-		  foreach ($dizimiz as $value) :
-	  
-	  if (!in_array($value["siparis_no"],$dizi2)): 
-	 
-	  
-	  $dongusayisi++;
-	  
-	  if (empty($toplam)) :
-	  $toplam[]=$value["toplamfiyat"];
-	  
-	  else:
-	  
-	  ?>
-      
-      
-              <!-- TOPLAM FİYAT -->
-                     
-        			 <div class="row">
-                	<div class="col-md-12 text-center">     
-					<span>
-					<?php
-					print_r(array_sum($toplam));
-					
-					 ?></span></div>        
-                        
-                    </div>    
-                 <!-- TOPLAM FİYAT -->   
-                 
-               
-      
-      
-      <?php
-	  
-	  
-	    unset($toplam);
-	    $toplam=array();
-	    $toplam[]=$value["toplamfiyat"];
-		
-		
-	  endif;
-	  
-	  		
-	  
 	
 	  
+	  $siparisnum=array();
+	  
+	  foreach ($dizimiz as $value) :	  
+	  $siparisnum[]=$value["siparis_no"];	  
+	  endforeach;	 
+	
+	  $temizsiparisnumaralari=array_unique($siparisnum,SORT_STRING);
+	  
+	  
+	  foreach ($temizsiparisnumaralari as $value) :
+	  	$siparisler=$this->db->listele("siparisler","where siparis_no=".$value);
 	?>
 		
 		
       	<!-- SİPARİŞİN İSKELETİ BAŞLIYOR -->
         		 <div class="row arkaplan2  pb-0" >
                  	<div class="col-xl-2 col-lg-2 col-md-12 col-sm-12  Uye_panel_siparisler">
-                    <span>Sipariş No :</span> <span class="spantext"><?php echo $value["siparis_no"]; ?></span>
-                    </div>
-                    
-                    <div class="col-xl-1 col-lg-1 col-md-12 col-sm-12 pt-3 Uye_panel_siparisler">
-                    <span>Üye id :</span> <span class="spantext"><?php echo $value["uyeid"];  ?></span>
-                    </div>
+                    <span>Sipariş No :</span> <span class="spantext"><?php echo $value; ?></span>
+                    </div>                   
                     
                     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 pt-3 Uye_panel_siparisler">
                     <span>Kargo Durumu :</span> <span class="spantext">
 					
 					<?php 
-					switch ($value["kargodurum"]) :
+					switch ($siparisler[0]["kargodurum"]) :
 					
 					case "0":
 					echo "Tedarik Sürecinde"; 
@@ -251,22 +206,20 @@ echo  '<li><a href="'.URL.'/urunler/kategori/'.$aktar3["id"].'/'.$this->seo($akt
                     </div>
                     
                     <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 Uye_panel_siparisler">
-                    <span>Ödeme Türü :</span> <span class="spantext"><?php echo $value["odemeturu"]; ?></span>
+                    <span>Ödeme Türü :</span> <span class="spantext"><?php echo $siparisler[0]["odemeturu"]; ?></span>
                     </div>
                     
-                    <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 Uye_panel_siparisler">
-                    <span>Tarih :</span> <span class="spantext"><?php echo $value["tarih"]; ?></span>
+                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 Uye_panel_siparisler">
+                    <span>Tarih :</span> <span class="spantext"><?php echo $siparisler[0]["tarih"]; ?></span>
                     </div>
                     
                <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 Uye_panel_siparisler" id="detaygoster">
                
-  <a href="#" data-value="<?php echo $value["siparis_no"]; ?>" data-value2="<?php echo $value["adresid"]; ?>" data-toggle="modal" data-target="#exampleModalCenter">Teslimat Adresi</a> 
-                    </div>             
-                                    
-                 
+  <a href="#" data-value="<?php echo $value; ?>" data-value2="<?php echo $siparisler[0]["adresid"]; ?>" data-toggle="modal" data-target="#exampleModalCenter" id="adres">Teslimat  |</a>
+  <a href="#" id="iade" data-value="<?php echo $value; ?>" >İade</a>  
 
- 
-                    
+                    </div>                                                 
+                 
                     
                     <!--  ÜRÜNLER-->
            
@@ -274,45 +227,25 @@ echo  '<li><a href="'.URL.'/urunler/kategori/'.$aktar3["id"].'/'.$this->seo($akt
                      
                      	<div class="row p-5">                      
                         
-<div class="col-lg-3 bg-gradient-gri text-dark kalinyap p-2">ÜRÜN ADI</div>
+<div class="col-lg-3 bg-gradient-gri text-dark kalinyap p-2 ">ÜRÜN ADI</div>
 <div class="col-lg-3 bg-gradient-gri text-dark kalinyap p-2">ÜRÜN ADET</div>
 <div class="col-lg-3 bg-gradient-gri text-dark kalinyap p-2">ÜRÜN FİYAT</div>
 <div class="col-lg-3 bg-gradient-gri text-dark kalinyap p-2">TOPLAM FİYAT</div>
 						</div>
                         
                         <?php 
-						
-						else:
-						$dongusayisi++;
-						
-								if ($satirsayi==$dongusayisi) :
-								$toplam[]=$value["toplamfiyat"];
-								$izin=true;
-								else:
-								
-								$toplam[]=$value["toplamfiyat"];
-								
-								
-								endif;
-						
-						// burada başka işler var
-						
-						
-						
-						endif;
-						
-						
-						echo '<div class="row border border-light">     
-<div class="col-lg-3 urunler">'.$value["urunad"].'</div>
-<div class="col-lg-3 urunler">'.$value["urunadet"].'</div>
-<div class="col-lg-3 urunler">'.number_format($value["urunfiyat"], 2, ',', '.').'</div>
-<div class="col-lg-3 urunler">'.$value["toplamfiyat"].'</div>             
+						$toplam=array();
+					for ($i=0; $i<count($siparisler); $i++):
+					
+		echo '<div class="row border border-light">     
+<div class="col-lg-3 urunler">'.$siparisler[$i]["urunad"].'</div>
+<div class="col-lg-3 urunler">'.$siparisler[$i]["urunadet"].'</div>
+<div class="col-lg-3 urunler">'.number_format($siparisler[$i]["urunfiyat"], 2, ',', '.').'</div>
+<div class="col-lg-3 urunler">'.$siparisler[$i]["toplamfiyat"].'</div>             
                      </div> ';
-						
-						
-						
-						if ($izin) :
-						
+					$toplam[]=$siparisler[$i]["toplamfiyat"];		
+					endfor;
+					
 							  ?>
       
       
@@ -336,48 +269,31 @@ echo  '<li><a href="'.URL.'/urunler/kategori/'.$aktar3["id"].'/'.$this->seo($akt
                
       
       
-      <?php
-						
-						  unset($toplam);
-	   					  $toplam=array();
-						
-						
-						
-						endif;
-						
-						
-						
-						
-						
-						
-						  $dizi2[]=$value["siparis_no"];
-	  
-	
-	  
-	  					endforeach;
-						
-						
-						 ?>
+     				
                         
                    
                      
                      </div>
                  
                    <!--  ÜRÜNLER-->
-                   
-               
-                 
+                   <div class="row"> 
+					   <div class="col-lg-12 "><div id="iadeiskelet"></div></div>
+				
+                  </div>
                  
                  </div>
         
-      	<!-- SİPARİŞİN İSKELETİ BİTİYOR -->            
-                
-                
-                
-                <?php
-	
-	} // PANEL - ÜYENİN SİPARİŞLERİNİ GETİRİYOR
-	
+      	<!-- SİPARİŞİN İSKELETİ BİTİYOR -->  
+		
+		 <?php
+	  	
+	  
+	  					endforeach;
+			
+		
+		
+	} // PANEL - ÜYENİN SİPARİŞLERİNİ GETİRİYOR*/
+		
 	function UyeyorumGetir($dizimiz,$toplamsayfa=false,$toplamveri=false) {
 		                
               echo'<div class="row"><div class="col-md-12 text-center">';

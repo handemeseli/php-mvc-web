@@ -1,6 +1,43 @@
 
 $(document).ready(function(e) {
 	
+	$(' body #iade').click(function() {
+		
+		var eleman=$(this);
+		var sipno=$(this).attr('data-value');
+		var iadeiskelet=eleman.parents(".arkaplan2").find("#iadeiskelet")
+		iadeiskelet.html('<div class="alert alert-warning text-center"><input type="button" id="iadebutonu" class="btn btn-success" data-value="'+sipno+'" value="İADE ET"><input type="button" id="vazgec" class="btn btn-danger" value="VAZGEÇ"></div>');
+		
+		iadeiskelet.find('#iadebutonu').click(function() {
+		
+		var sipno=$(this).attr('data-value');		
+			$.post("http://localhost/PROJELER/mvcproje/GenelGorev/iadeislemi",{"sipno":sipno},function(cevap) {
+
+				iadeiskelet.html(cevap);
+
+			});
+		});
+		iadeiskelet.find('#vazgec').click(function() {
+		
+			iadeiskelet.html("").hide();
+			
+		});
+	
+	});//kullanıcı arayüz iade işlemleri
+	
+	$('#iadeonay a').click(function() {
+		
+		var eleman=$(this);
+		var sipno=$(this).attr('data-value');
+		var iadeiskelet=eleman.parents(".arkaplan");
+		
+		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/paneliadeislemi",{"sipno":sipno},function() {
+
+			iadeiskelet.fadeOut();
+
+		});
+	
+	});//yönetici arayüz iade işlemleri
 	
 	$('#anaekranselect').attr("disabled",false);
 	$('#cocukekranselect').attr("disabled",true);

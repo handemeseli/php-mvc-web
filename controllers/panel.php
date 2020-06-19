@@ -64,7 +64,6 @@ class panel extends Controller  {
 		
 	} // VARSAYILAN OLARAK ÇALIŞIYOR
 
-	
 	//--------------------------------------------------------------------------------------
 	
 	function siparisler() {
@@ -319,6 +318,17 @@ class panel extends Controller  {
 			  ),$this->model->icerikler[0]);
 		
 	}  // SİPARİŞ EXCEL ÇIKTI
+	
+	function siparisiade() {
+			$this->yetkikontrol->YetkisineBak("siparisYonetim");
+			
+	$this->view->goster("YonPanel/sayfalar/siparisiade",array(
+	
+	"data" => $this->model->SpesifikVerial("siparis_no from siparisler where durum=2")
+	
+	));		
+		
+	} // SİPARİŞLERİN İADE EKRANI	
 	
 	//--------------------------------------------------------------------------------------
 	
@@ -681,9 +691,7 @@ class panel extends Controller  {
 	
 		
 	} // KATEGORİ ARAMA
-	
-	
-	
+		
 	//--------------------------------------------------------------------------------------
 	
 	function uyeler ($mevcutsayfa=false) {
@@ -1656,7 +1664,6 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 		
 	}	 // SİSTEM AYARLARI GÜNCELLEME SON
-	
 	
 	//--------------------------------------------------------------------------------------
 	
