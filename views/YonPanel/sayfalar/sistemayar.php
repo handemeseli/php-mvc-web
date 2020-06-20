@@ -184,6 +184,13 @@
 					 
 					 
 					  ?></div>
+												<div class="col-lg-7 col-xl-7 col-md-5 col-sm-12 uruneklemeElemanlar">PANEL- Bülten Görüntü Adet</div>
+                    <div class="col-lg-5 col-xl-5 col-md-5 col-sm-12 uruneklemeElemanlarDiger">  <?php 
+										
+ 	 					Form::Olustur("2",array("type"=>"text","class"=>"form-control","name"=>"bultenGoruntuAdet","value"=>$veri["sistemayar"][0]["bultenGoruntuAdet"]));	   	 
+					 
+					 
+					  ?></div>
 												
 												
                   </div>

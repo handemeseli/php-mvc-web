@@ -1,6 +1,34 @@
 
 $(document).ready(function(e) {
 	
+	$('#toplusilbtn').click(function() {	
+		var elemanlar=$(":checkbox:checked");
+		var idler="";
+		//var idlerimiz=[];	
+		elemanlar.each(function() {
+			idler +=$(this).val()+",";
+			//idlerimiz.push($(this).val());
+		});
+	/*$.each(idlerimiz,function(index, value){		
+		var anaiskelet=$(":checkbox:checked").prop("value",value).parents('.mailcerceve');
+		anaiskelet.css("background","black");
+		anaiskelet.fadeOut();
+	});*/
+		$.post("http://localhost/PROJELER/mvcproje/GenelGorev/bultentoplusilme",{"idler":idler},function() {
+				var anaiskelet=$(":checkbox:checked").parents('.mailcerceve');
+				anaiskelet.css("background","black");
+				anaiskelet.fadeOut();
+		});			
+	});// toplu bülten kayıt silme TOPLU SİL
+	
+	$('#tumunusecbtn').click(function() {			
+		$('body input[type="checkbox"]').attr("checked",true);
+		});// toplu bülten kayıt silme HEPSİNİ SEÇ
+		
+	$('#tumunukaldirbtn').click(function() {
+		$('body input[type="checkbox"]').attr("checked",false);	
+	});// toplu bülten kayıt silme SEÇİMİ KALDIR
+	
 	$(' body #iade').click(function() {
 		
 		var eleman=$(this);

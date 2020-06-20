@@ -89,7 +89,7 @@
 				  	
 					 $geldi= $PanelHarici->tekverial("ayarlar");
 								
-	  				//echo "Son yedekleme zamanı:".  $geldi[0]["yedekzaman"]; ?></div> 
+	  				echo "Son yedekleme zamanı:".  $geldi[0]["yedekzaman"]; ?></div> 
              
             
              

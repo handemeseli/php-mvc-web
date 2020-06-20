@@ -820,13 +820,21 @@ class panel extends Controller  {
 	function uyearama($kelime=false,$mevcutsayfa=false) {	
 		$this->yetkikontrol->YetkisineBak("uyeYonetim");
 		
-		if ($_POST) :
+		if ($_POST || isset($kelime)) :
+		
+		if ($_POST): 
+		$aramaverisi=$this->form->get("aramaverisi")->bosmu();
+		$sorgum=!empty($this->form->error);
+		else:
+		$aramaverisi=$kelime;
+		$sorgum=empty($kelime);
+		endif;
 				
 		$aramaverisi=$this->form->get("aramaverisi")->bosmu();
 		
 		
+				if ($sorgum) :
 		
-				if (!empty($this->form->error)) :
 				
 				$this->view->goster("YonPanel/sayfalar/uyeler",
 				array(		
@@ -873,30 +881,6 @@ class panel extends Controller  {
 	
 				
 				endif;
-		
-		elseif(isset($kelime)):
-			$bilgicek=$this->model->arama("uye_panel",
-			"id LIKE '%".$kelime."%' or 
-			ad LIKE '%".$kelime."%'  or 
-			soyad LIKE '%".$kelime."%' or 
-			telefon LIKE '%".$kelime."%'");
-		    $this->Pagination->paginationOlustur(count($bilgicek),$mevcutsayfa,$this->model->tekliveri("uyelerAramaAdet","from ayarlar"));
-		
-		$this->view->goster("YonPanel/sayfalar/uyeler",array(
-				
-				"data" => $this->model->arama("uye_panel",
-			"id LIKE '%".$kelime."%' or 
-			ad LIKE '%".$kelime."%'  or 
-			soyad LIKE '%".$kelime."%' or 
-			telefon LIKE '%".$kelime."%' LIMIT ".$this->Pagination->limit.",".$this->Pagination->gosterilecekadet), 
-		"toplamsayfa" => $this->Pagination->toplamsayfa,
-		"toplamveri" => count($bilgicek),
-		"arama" => $kelime
-		
-		
-				
-				));		
-				
 		
 		
 		else:
@@ -1233,7 +1217,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		if ($_POST) :
 				
 		$katid=$this->form->get("katid")->bosmu();
-		
+
 		
 		$bilgicek=$this->model->Verial("urunler","where katid=".$katid);
 		
@@ -1297,13 +1281,19 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 	function urunarama($kelime=false,$mevcutsayfa=false) {	
 		$this->yetkikontrol->YetkisineBak("urunYonetim");
-		if ($_POST) :
-				
+		if ($_POST || isset($kelime)) :
+		
+		if ($_POST): 
 		$aramaverisi=$this->form->get("arama")->bosmu();
+		$sorgum=!empty($this->form->error);
+		else:
+		$aramaverisi=$kelime;
+		$sorgum=empty($kelime);
+		endif;
 		
+	
 		
-		
-				if (!empty($this->form->error)) :
+				if ($sorgum) :
 				
 				$this->view->goster("YonPanel/sayfalar/urunler",
 				array(		
@@ -1348,39 +1338,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 				
 				endif;
-		
-		
-		
-		
-		elseif(isset($kelime)):
-		
-			$bilgicek=$this->model->arama("urunler",
-			"urunad LIKE '%".$kelime."%' or 
-			kumas LIKE '%".$kelime."%'  or 
-			urtYeri LIKE '%".$kelime."%' or 
-			stok LIKE '%".$kelime."%'");
-			
-		$this->Pagination->paginationOlustur(count($bilgicek),$mevcutsayfa,$this->model->tekliveri("urunlerAramaAdet","from ayarlar"));
-		
-		
-		$this->view->goster("YonPanel/sayfalar/urunler",array(
-			"data" => $this->model->arama("urunler",
-			"urunad LIKE '%".$kelime."%' or 
-			kumas LIKE '%".$kelime."%'  or 
-			urtYeri LIKE '%".$kelime."%' or 
-			stok LIKE '%".$kelime."%' LIMIT ".$this->Pagination->limit.",".$this->Pagination->gosterilecekadet), 
-			"toplamsayfa" => $this->Pagination->toplamsayfa,
-			"toplamveri" => count($bilgicek),
-			"arama" => $kelime,
-			"data2" => $this->model->Verial("alt_kategori",false),
-			"AnakategorilerTumu" => $this->model->Verial("ana_kategori",false)
-		));
-			
-			
 				
-		
-		
-		
 		else:
 			$this->bilgi->direktYonlen("/panel/urunler");		
 		
@@ -1395,13 +1353,17 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 	//--------------------------------------------------------------------------------------
 	
-	function bulten () {
+	function bulten ($mevcutsayfa=false) {
 		
 		$this->yetkikontrol->YetkisineBak("bultenYonetim");
 		
+		$this->Pagination->paginationOlustur($this->model->sayfalama("bulten"),$mevcutsayfa,$this->model->tekliveri("bultenGoruntuAdet","from ayarlar"));
+		
 		$this->view->goster("YonPanel/sayfalar/bulten",array(
 		
-		"data" => $this->model->Verial("bulten",false)
+		"data" => $this->model->Verial("bulten"," LIMIT ".$this->Pagination->limit.",".$this->Pagination->gosterilecekadet), 
+		"toplamsayfa" => $this->Pagination->toplamsayfa,
+		"toplamveri" => $this->model->sayfalama("bulten")
 		
 		));
 	
@@ -1452,119 +1414,86 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		
 	}  // BÜLTEN MAİL SİL
 	
-	function mailarama() {	
-		
-		$this->yetkikontrol->YetkisineBak("bultenYonetim");
-		
-		if ($_POST) :
-				
-		$aramaverisi=$this->form->get("arama")->bosmu();
-		
-		
-		
-				if (!empty($this->form->error)) :
-				
+	function mailarama($kelime=false,$mevcutsayfa=false) {			
+		$this->yetkikontrol->YetkisineBak("bultenYonetim");		
+		if ($_POST || isset($kelime)) :		
+			if ($_POST): 
+				$aramaverisi=$this->form->get("arama")->bosmu();
+				$sorgum=!empty($this->form->error);
+			else:
+				$aramaverisi=$kelime;
+				$sorgum=empty($kelime);
+			endif;
+			if ($sorgum) :				
 				$this->view->goster("YonPanel/sayfalar/bulten",
 				array(		
 				"bilgi" => $this->bilgi->hata("MAİL YAZILMALIDIR.","/panel/bulten",2)
-				 ));
-				
-				
-				else:
-				
-			
-			
-			$bilgicek=$this->model->arama("bulten",
-			"mailadres LIKE '%".$aramaverisi."%'");
-			
-				if ($bilgicek):
-			
-				$this->view->goster("YonPanel/sayfalar/bulten",array(
-				
-				"data" => $bilgicek				
-				));		
-				
-				else:
-				
-				$this->view->goster("YonPanel/sayfalar/bulten",
-				array(		
-				"bilgi" => $this->bilgi->hata("HİÇBİR KRİTER UYUŞMADI.","/panel/bulten",2)
-				 ));			
-				endif;
-	
-				
-				endif;
-		
-		
-		
+				 ));				
+			else:				
+				$bilgicek=$this->model->arama("bulten",
+				"mailadres LIKE '%".$aramaverisi."%'");		
+		    	$this->Pagination->paginationOlustur(count($bilgicek),$mevcutsayfa,$this->model->tekliveri("bultenGoruntuAdet","from ayarlar"));			
+				if (count($bilgicek)>0):			
+					$this->view->goster("YonPanel/sayfalar/bulten",array(				
+					"data" => $this->model->arama("bulten",
+					"mailadres LIKE '%".$aramaverisi."%' LIMIT ".$this->Pagination->limit.",".$this->Pagination->gosterilecekadet), 
+					"toplamsayfa" => $this->Pagination->toplamsayfa,
+					"toplamveri" => count($bilgicek),
+					"arama" => $aramaverisi
+					));			
+				else:				
+					$this->view->goster("YonPanel/sayfalar/bulten",
+					array(		
+					"bilgi" => $this->bilgi->hata("HİÇBİR MAİL ADRESİ BULUNAMADI.","/panel/bulten",2)
+					));			
+				endif;				
+			endif;
 		else:
 			$this->bilgi->direktYonlen("/panel/bulten");		
-		
-		
-		endif;
-	
-			
-
-	
-		
+		endif;	
 	} // BÜLTEN MAİL ARAMA
 	
-	function tarihegoregetir() {	
-		
-		$this->yetkikontrol->YetkisineBak("bultenYonetim");
-		
-		if ($_POST) :
-				
-		$tar1=$this->form->get("tar1")->bosmu();
-		$tar2=$this->form->get("tar2")->bosmu();
-		
-		
-		
-				if (!empty($this->form->error)) :
-				
+	function tarihegoregetir($tarih1=false,$tarih2=false,$mevcutsayfa=false) {			
+		$this->yetkikontrol->YetkisineBak("bultenYonetim");		
+		if ($_POST || (isset($tarih1) and isset($tarih2))) :
+			if ($_POST): 
+				$tar1=$this->form->get("tar1")->bosmu();
+				$tar2=$this->form->get("tar2")->bosmu();
+				$sorgum=!empty($this->form->error);
+			else:
+				$tar1=$tarih1;
+				$tar2=$tarih2;
+				$sorgum=empty($tarih1) && empty($tarih2);
+			endif;		
+			if ($sorgum) :				
 				$this->view->goster("YonPanel/sayfalar/bulten",
 				array(		
 				"bilgi" => $this->bilgi->hata("TARİHLER BELİRTİLMELİDİR.","/panel/bulten",2)
 				 ));
-				
-				
-				else:
-				
-			
-			
-			$bilgicek=$this->model->Verial("bulten",
-			"where DATE(tarih) BETWEEN '".$tar1."' and '".$tar2."' ");
-			
-				if ($bilgicek):
-			
-				$this->view->goster("YonPanel/sayfalar/bulten",array(
-				
-				"data" => $bilgicek				
-				));		
-				
-				else:
-				
-				$this->view->goster("YonPanel/sayfalar/bulten",
-				array(		
-				"bilgi" => $this->bilgi->hata("HİÇBİR KRİTER UYUŞMADI.","/panel/bulten",2)
-				 ));			
+			else:
+				$bilgicek=$this->model->Verial("bulten",
+				"where DATE(tarih) BETWEEN '".$tar1."' and '".$tar2."' ");		
+		    	$this->Pagination->paginationOlustur(count($bilgicek),$mevcutsayfa,$this->model->tekliveri("bultenGoruntuAdet","from ayarlar"));
+				if (count($bilgicek)>0):			
+					$this->view->goster("YonPanel/sayfalar/bulten",array(				
+					"data" => $this->model->Verial("bulten",
+					"where DATE(tarih) BETWEEN '".$tar1."' and '".$tar2."' LIMIT ".$this->Pagination->limit.",".$this->Pagination->gosterilecekadet), 
+					"toplamsayfa" => $this->Pagination->toplamsayfa,
+					"toplamveri" => count($bilgicek),
+					"tariharama" => true,
+					"tarih1" => $tar1,
+					"tarih2" => $tar2
+					));
+				else:				
+					$this->view->goster("YonPanel/sayfalar/bulten",
+					array(		
+					"bilgi" => $this->bilgi->hata("HİÇBİR MAİL ADRESİ BULUNAMADI.","/panel/bulten",2)
+					 ));			
 				endif;
-	
-				
-				endif;
-		
-		
-		
+			endif;
 		else:
 			$this->bilgi->direktYonlen("/panel/bulten");		
-		
-		
 		endif;
-	
-			
-
-	
-		
 	} // BÜLTEN TARİHE GÖRE ARAMA
 
 	//--------------------------------------------------------------------------------------
@@ -1607,7 +1536,7 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 		$urunlerKategoriAdet=$this->form->get("urunlerKategoriAdet")->bosmu();
 		$SiteUrunlerAdet=$this->form->get("SiteUrunlerAdet")->bosmu();
 		$uyeYorumAdet=$this->form->get("uyeYorumAdet")->bosmu();
-		
+		$bultenGoruntuAdet=$this->form->get("bultenGoruntuAdet")->bosmu();
 		
 		
 		
@@ -1625,8 +1554,8 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 			else:	
 		
 		$sonuc=$this->model->Guncelle("ayarlar",
-		array("sloganUst1","sloganAlt1","sloganUst2","sloganAlt2","sloganUst3","sloganAlt3","title","sayfaAciklama","anahtarKelime","uyelerGoruntuAdet","uyelerAramaAdet","urunlerGoruntuAdet","urunlerAramaAdet","urunlerKategoriAdet","ArayuzurunlerGoruntuAdet","uyeYorumAdet"),
-		array($sloganust1,$sloganalt1,$sloganust2,$sloganalt2,$sloganust3,$sloganalt3,$sayfatitle,$sayfaaciklama,$anahtarkelime,$uyeSayfaGorAdet,$uyeSayfaAramaAdet,$urunlerSayfaGorAdet,$urunAramaAdet,$urunlerKategoriAdet,$SiteUrunlerAdet,$uyeYorumAdet),"id=".$kayitid);
+		array("sloganUst1","sloganAlt1","sloganUst2","sloganAlt2","sloganUst3","sloganAlt3","title","sayfaAciklama","anahtarKelime","uyelerGoruntuAdet","uyelerAramaAdet","urunlerGoruntuAdet","urunlerAramaAdet","urunlerKategoriAdet","ArayuzurunlerGoruntuAdet","uyeYorumAdet","bultenGoruntuAdet"),
+		array($sloganust1,$sloganalt1,$sloganust2,$sloganalt2,$sloganust3,$sloganalt3,$sayfatitle,$sayfaaciklama,$anahtarkelime,$uyeSayfaGorAdet,$uyeSayfaAramaAdet,$urunlerSayfaGorAdet,$urunAramaAdet,$urunlerKategoriAdet,$SiteUrunlerAdet,$uyeYorumAdet,$bultenGoruntuAdet),"id=".$kayitid);
 				
 	
 		

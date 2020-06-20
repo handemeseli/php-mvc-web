@@ -105,6 +105,15 @@ class GenelGorev extends Controller  {
 		
 	} // BULTEN KAYIT  KONTROL
 	
+	function bultentoplusilme () {
+		if ($_POST) :		
+			$idler=rtrim($_POST["idler"],",");	
+			$this->model->Silmeİslemi("bulten","id IN(".$idler.")");		
+		else:		
+			$this->bilgi->direktYonlen("/");	
+	    endif;
+	} //BULTEN TOPLU SİLME
+	
 	function iletisim() {
 		if ($_POST) :		
 	$ad=$this->form->get("ad")->bosmu();
