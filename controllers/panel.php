@@ -7,7 +7,7 @@ class panel extends Controller  {
 	
 	function __construct() {
 		
-		parent::KutuphaneYukle(array("view","form","bilgi","Upload","Pagination","dosyacikti"));
+		parent::KutuphaneYukle(array("view","form","bilgi","Upload","Pagination","dosyacikti","DosyaIslemleri"));
 		
 	$this->Modelyukle('adminpanel');
 	Session::init();
@@ -1350,6 +1350,123 @@ if ($this->Upload->uploadPostAl("res3")) : $this->Upload->UploadDosyaKontrol("re
 	
 		
 	} // ÜRÜNLER ARAMA	
+	
+	function topluurunekle($son=false) {			
+		$this->yetkikontrol->YetkisineBak("urunYonetim");
+		if ($son):
+		$tercih=$this->form->radiobutonget("dosyatercih");
+			if ($tercih=="xml"):
+				$this->DosyaIslemleri->VerileriAyikla("dosya","/urunler/urun",
+				array("ana_kat_id","cocuk_kat_id","katid","*urunad","*res1","*res2","*res3","durum","*aciklama","*kumas","*urtYeri","*renk","fiyat","stok","*ozellik","*ekstraBilgi"));
+			else:
+				$this->DosyaIslemleri->JsonVerileriAyikla("dosya");
+			endif;			
+			if (!empty($this->Dosyaİslemleri->error)) :
+				$this->view->goster("YonPanel/sayfalar/topluurunislem",
+				array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARISIZ","Yüklenen XML Dosyası Açılamadı","warning")));
+			else:
+				$zipsonuc=$this->Upload->xmlzipresimyukleme("zipdosya");
+				if (!empty($this->Upload->error)) :
+					$this->view->goster("YonPanel/sayfalar/topluurunislem",
+					array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARISIZ","Yüklenen Zip Dosyası Hatalı","warning")));
+				else:
+					$sonuc=$this->model->TopluEkleme("urunler",
+					array("ana_kat_id","cocuk_kat_id","katid","urunad","res1","res2","res3","durum","aciklama","kumas","urtYeri","renk","fiyat","stok","ozellik","ekstraBilgi"),$this->DosyaIslemleri->verileritut);
+					if ($sonuc):
+						$this->Upload->ZipResimYuklemeSon("zipdosya",$zipsonuc);
+						$this->view->goster("YonPanel/sayfalar/topluurunislem",
+						array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARILI","İÇERİ AKTARIM BAŞARILI","success") ));				
+					else:		
+						$this->view->goster("YonPanel/sayfalar/topluurunislem",
+						array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARISIZ","EKLEME SIRASINDA HATA OLUŞTU","warning") ));		
+					endif;
+				endif;
+			endif;
+		else:	
+			$this->view->goster("YonPanel/sayfalar/topluurunislem",array("topluekleme" => true));
+		endif;
+	}	 // TOPLU ÜRÜN EKLEME
+	
+	function topluurunguncelleme($son=false) {
+		$this->yetkikontrol->YetkisineBak("urunYonetim");
+		if ($son):	
+			$tercih=$this->form->radiobutonget("dosyatercih");
+			if ($tercih=="xml"):
+				$this->Dosyaİslemleri->TopluGuncellemeXml("dosya","/urunler/urun");
+			else:	
+				$this->Dosyaİslemleri->TopluGuncellemeJson("dosya");
+			endif;
+			if (!empty($this->Dosyaİslemleri->error)) :
+				$this->view->goster("YonPanel/sayfalar/topluurunislem",
+				array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARISIZ","Yüklenen  Dosya Açılamadı","warning")));
+			else:
+				if ($this->Dosyaİslemleri->resimvarmi):
+					$zipsonuc=$this->Upload->xmlzipresimyukleme("zipdosya");
+					if (!empty($this->Upload->error)) :
+						$this->view->goster("YonPanel/sayfalar/topluurunislem",
+						array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARISIZ","Yüklenen Zip Dosyası Hatalı","warning")));
+						exit();
+					endif;
+				endif;	 
+				$this->model->TopluislemBaslat();	
+				for ($a=0; $a<count($this->Dosyaİslemleri->verilerdizi); $a++):
+					$sonuc=$this->model->Guncelle("urunler",
+					$this->Dosyaİslemleri->sutunlardizi[$a],
+					$this->Dosyaİslemleri->verilerdizi[$a],
+					"id=".$this->Dosyaİslemleri->verilerdizi[$a][0]);
+					if (!$sonuc):
+						$this->sorguhatasi=true;
+					else:
+						$this->sorguhatasi=false;
+					endif;
+				endfor;
+				if ($this->sorguhatasi):	
+					$this->model->İslemlerigerial();
+				else:
+					$this->model->TopluislemTamamla();
+				endif;
+				if (!$this->sorguhatasi): 
+					if ($this->Dosyaİslemleri->resimvarmi):
+						$this->Upload->ZipResimYuklemeSon("zipdosya",$zipsonuc);
+					endif;
+					$this->view->goster("YonPanel/sayfalar/topluurunislem",
+					array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARILI","İÇERİ AKTARIM BAŞARI","success")));
+				else:
+					$this->view->goster("YonPanel/sayfalar/topluurunislem",
+					array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARISIZ","EKLEME SIRASINDA HATA OLUŞTU","warning")));	
+				endif;	
+			 endif;
+		else:
+		$this->view->goster("YonPanel/sayfalar/topluurunislem",array("topluguncelle" => true));	
+		endif;
+	} // TOPLU ÜRÜN GÜNCELLEME
+
+	function topluurunsilme($son=false) {	
+		$this->yetkikontrol->YetkisineBak("urunYonetim");	
+		if ($son):	
+			$tercih=$this->form->radiobutonget("dosyatercih");
+			if ($tercih=="xml"):
+				$sonhal=$this->Dosyaİslemleri->TopluSilmeXml("dosya","/urunler/urun");
+			else:	
+				$sonhal=$this->Dosyaİslemleri->TopluSilmeJson("dosya");
+			endif;
+			if (!empty($this->Dosyaİslemleri->error)) :
+				$this->view->goster("YonPanel/sayfalar/topluurunislem",
+				array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARISIZ","Yüklenen  Dosya Açılamadı","warning")));
+			else:		 							 
+				$sonuc=$this->model->Sil("urunler","id IN($sonhal)");		
+				if ($sonuc): 
+					$this->view->goster("YonPanel/sayfalar/topluurunislem",
+					array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARILI","ÜRÜNLER SİLİNDİ","success")));
+				else:
+					$this->view->goster("YonPanel/sayfalar/topluurunislem",
+					array("bilgi" => $this->bilgi->SweetAlert(URL."/panel/urunler","BAŞARISIZ","EKLEME SIRASINDA HATA OLUŞTU","warning")));	
+				endif;	
+			 endif;	
+		else:
+			$this->view->goster("YonPanel/sayfalar/topluurunislem",array("toplusilme" => true));	
+		endif;		
+	} // TOPLU ÜRÜN GÜNCELLEME
 	
 	//--------------------------------------------------------------------------------------
 	

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1:3306
--- Üretim Zamanı: 09 Haz 2020, 00:07:46
+-- Üretim Zamanı: 21 Haz 2020, 09:13:41
 -- Sunucu sürümü: 10.4.10-MariaDB
 -- PHP Sürümü: 7.3.12
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `adresler` (
   `adres` text COLLATE utf8_turkish_ci NOT NULL,
   `varsayilan` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Tablo döküm verisi `adresler`
@@ -49,7 +49,7 @@ INSERT INTO `adresler` (`id`, `uyeid`, `adres`, `varsayilan`) VALUES
 (17, 16, 'deneme', 0),
 (16, 16, 'hhashakdaddfsd', 0),
 (21, 18, 'hahahah', 1),
-(22, 21, 'kütahya\r\n', 1);
+(24, 23, 'kütahya', 1);
 
 -- --------------------------------------------------------
 
@@ -144,6 +144,9 @@ CREATE TABLE IF NOT EXISTS `ayarlar` (
   `urunlerKategoriAdet` int(11) NOT NULL,
   `ArayuzurunlerGoruntuAdet` int(11) NOT NULL,
   `uyeYorumAdet` int(11) NOT NULL,
+  `bultenGoruntuAdet` int(11) NOT NULL,
+  `bakimzaman` varchar(30) COLLATE utf8_turkish_ci NOT NULL,
+  `yedekzaman` varchar(30) COLLATE utf8_turkish_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
@@ -151,8 +154,8 @@ CREATE TABLE IF NOT EXISTS `ayarlar` (
 -- Tablo döküm verisi `ayarlar`
 --
 
-INSERT INTO `ayarlar` (`id`, `sloganUst1`, `sloganAlt1`, `sloganUst2`, `sloganAlt2`, `sloganUst3`, `sloganAlt3`, `title`, `sayfaAciklama`, `anahtarKelime`, `uyelerGoruntuAdet`, `uyelerAramaAdet`, `uyelerYorumAdet`, `urunlerGoruntuAdet`, `urunlerAramaAdet`, `urunlerKategoriAdet`, `ArayuzurunlerGoruntuAdet`, `uyeYorumAdet`) VALUES
-(1, 'DB-Üst Slogan 1', 'DB-Alt Slogan 1', 'DB-Üst Slogan  2', 'DB-Alt Slogan 2', 'DB-Üst Slogan 3', 'DB-Alt Slogan 3', 'MVC E-TİCARET UYGULAMASI', 'Olcay kalyoncuoğlu- Udemy MVC E-ticaret Eğitimi', 'eğitim, eticaret,anahtar,kelimeler,buraya,virgüller,koyularak,yazilacak', 3, 3, 2, 15, 3, 3, 3, 3);
+INSERT INTO `ayarlar` (`id`, `sloganUst1`, `sloganAlt1`, `sloganUst2`, `sloganAlt2`, `sloganUst3`, `sloganAlt3`, `title`, `sayfaAciklama`, `anahtarKelime`, `uyelerGoruntuAdet`, `uyelerAramaAdet`, `uyelerYorumAdet`, `urunlerGoruntuAdet`, `urunlerAramaAdet`, `urunlerKategoriAdet`, `ArayuzurunlerGoruntuAdet`, `uyeYorumAdet`, `bultenGoruntuAdet`, `bakimzaman`, `yedekzaman`) VALUES
+(1, 'DB-Üst Slogan 1', 'DB-Alt Slogan 1', 'DB-Üst Slogan  2', 'DB-Alt Slogan 2', 'DB-Üst Slogan 3', 'DB-Alt Slogan 3', 'MVC E-TİCARET UYGULAMASI', 'Olcay kalyoncuoğlu- Udemy MVC E-ticaret Eğitimi', 'eğitim, eticaret,anahtar,kelimeler,buraya,virgüller,koyularak,yazilacak', 11, 11, 13, 11, 11, 11, 3, 11, 66, '', '');
 
 -- --------------------------------------------------------
 
@@ -189,21 +192,133 @@ DROP TABLE IF EXISTS `bulten`;
 CREATE TABLE IF NOT EXISTS `bulten` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mailadres` varchar(30) COLLATE utf8_turkish_ci NOT NULL,
-  `tarih` varchar(30) COLLATE utf8_turkish_ci NOT NULL,
+  `tarih` date NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=147 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Tablo döküm verisi `bulten`
 --
 
 INSERT INTO `bulten` (`id`, `mailadres`, `tarih`) VALUES
-(1, 'dasdas@gmail.com', '18-05-2019'),
-(2, 'ahmet@hotmail.com', '18-05-2019'),
-(3, 'zimba@hotmail.com', '20-05-2019'),
-(4, 'asda@gmail.com', '20-05-2019'),
-(5, 'indexten@gmail.com', '20-05-2019'),
-(6, '22hakan@hotmail.com', '25-05-2019');
+(1, 'dasdas@gmail.com', '2020-06-19'),
+(2, 'ahmet@hotmail.com', '2020-06-19'),
+(4, 'asda@gmail.com', '2020-06-19'),
+(5, 'indexten@gmail.com', '2020-06-19'),
+(6, '22hakan@hotmail.com', '2020-06-19'),
+(7, 'dasdas@gmail.com', '2020-06-20'),
+(8, 'ahmet@hotmail.com', '2020-06-20'),
+(10, 'asda@gmail.com', '2020-06-20'),
+(11, 'indexten@gmail.com', '2020-06-20'),
+(12, '22hakan@hotmail.com', '2020-06-20'),
+(13, 'dasdas@gmail.com', '2020-06-20'),
+(14, 'ahmet@hotmail.com', '2020-06-20'),
+(16, 'asda@gmail.com', '2020-06-20'),
+(17, 'indexten@gmail.com', '2020-06-20'),
+(18, '22hakan@hotmail.com', '2020-06-20'),
+(19, 'dasdas@gmail.com', '2020-06-20'),
+(20, 'ahmet@hotmail.com', '2020-06-20'),
+(22, 'asda@gmail.com', '2020-06-20'),
+(23, 'indexten@gmail.com', '2020-06-20'),
+(25, 'dasdas@gmail.com', '2020-06-20'),
+(26, 'ahmet@hotmail.com', '2020-06-20'),
+(28, 'asda@gmail.com', '2020-06-20'),
+(29, 'indexten@gmail.com', '2020-06-20'),
+(31, 'dasdas@gmail.com', '2020-06-20'),
+(32, 'ahmet@hotmail.com', '2020-06-20'),
+(34, 'asda@gmail.com', '2020-06-20'),
+(35, 'indexten@gmail.com', '2020-06-20'),
+(36, '22hakan@hotmail.com', '2020-06-20'),
+(37, 'dasdas@gmail.com', '2020-06-20'),
+(38, 'ahmet@hotmail.com', '2020-06-20'),
+(40, 'asda@gmail.com', '2020-06-20'),
+(41, 'indexten@gmail.com', '2020-06-20'),
+(42, '22hakan@hotmail.com', '2020-06-20'),
+(43, 'dasdas@gmail.com', '2020-06-20'),
+(44, 'ahmet@hotmail.com', '2020-06-20'),
+(46, 'asda@gmail.com', '2020-06-20'),
+(47, 'indexten@gmail.com', '2020-06-20'),
+(48, '22hakan@hotmail.com', '2020-06-20'),
+(49, 'dasdas@gmail.com', '2020-06-20'),
+(50, 'ahmet@hotmail.com', '2020-06-20'),
+(52, 'asda@gmail.com', '2020-06-20'),
+(53, 'indexten@gmail.com', '2020-06-20'),
+(54, '22hakan@hotmail.com', '2020-06-20'),
+(55, 'dasdas@gmail.com', '2020-06-20'),
+(56, 'ahmet@hotmail.com', '2020-06-20'),
+(58, 'asda@gmail.com', '2020-06-20'),
+(59, 'indexten@gmail.com', '2020-06-20'),
+(61, 'dasdas@gmail.com', '2020-06-20'),
+(62, 'ahmet@hotmail.com', '2020-06-20'),
+(64, 'asda@gmail.com', '2020-06-20'),
+(65, 'indexten@gmail.com', '2020-06-20'),
+(67, 'dasdas@gmail.com', '2020-06-20'),
+(68, 'ahmet@hotmail.com', '2020-06-20'),
+(70, 'asda@gmail.com', '2020-06-20'),
+(71, 'indexten@gmail.com', '2020-06-20'),
+(72, '22hakan@hotmail.com', '2020-06-20'),
+(73, 'dasdas@gmail.com', '2020-06-20'),
+(74, 'dasdas@gmail.com', '2020-06-20'),
+(75, 'ahmet@hotmail.com', '2020-06-20'),
+(77, 'asda@gmail.com', '2020-06-20'),
+(78, 'indexten@gmail.com', '2020-06-20'),
+(79, '22hakan@hotmail.com', '2020-06-20'),
+(80, 'dasdas@gmail.com', '2020-06-20'),
+(81, 'ahmet@hotmail.com', '2020-06-20'),
+(83, 'asda@gmail.com', '2020-06-20'),
+(84, 'indexten@gmail.com', '2020-06-20'),
+(85, '22hakan@hotmail.com', '2020-06-20'),
+(86, 'dasdas@gmail.com', '2020-06-20'),
+(87, 'ahmet@hotmail.com', '2020-06-20'),
+(89, 'asda@gmail.com', '2020-06-20'),
+(90, 'indexten@gmail.com', '2020-06-20'),
+(91, '22hakan@hotmail.com', '2020-06-20'),
+(92, 'dasdas@gmail.com', '2020-06-20'),
+(93, 'ahmet@hotmail.com', '2020-06-20'),
+(95, 'asda@gmail.com', '2020-06-20'),
+(96, 'indexten@gmail.com', '2020-06-20'),
+(97, '22hakan@hotmail.com', '2020-06-20'),
+(98, 'dasdas@gmail.com', '2020-06-20'),
+(99, 'ahmet@hotmail.com', '2020-06-20'),
+(101, 'asda@gmail.com', '2020-06-20'),
+(102, 'indexten@gmail.com', '2020-06-20'),
+(103, '22hakan@hotmail.com', '2020-06-20'),
+(104, 'dasdas@gmail.com', '2020-06-20'),
+(105, 'ahmet@hotmail.com', '2020-06-20'),
+(107, 'asda@gmail.com', '2020-06-20'),
+(108, 'indexten@gmail.com', '2020-06-20'),
+(109, '22hakan@hotmail.com', '2020-06-20'),
+(110, 'dasdas@gmail.com', '2020-06-20'),
+(111, 'ahmet@hotmail.com', '2020-06-20'),
+(113, 'asda@gmail.com', '2020-06-20'),
+(114, 'indexten@gmail.com', '2020-06-20'),
+(115, '22hakan@hotmail.com', '2020-06-20'),
+(116, 'dasdas@gmail.com', '2020-06-20'),
+(117, 'ahmet@hotmail.com', '2020-06-20'),
+(119, 'asda@gmail.com', '2020-06-20'),
+(120, 'indexten@gmail.com', '2020-06-20'),
+(121, '22hakan@hotmail.com', '2020-06-20'),
+(122, 'dasdas@gmail.com', '2020-06-20'),
+(123, 'ahmet@hotmail.com', '2020-06-20'),
+(125, 'asda@gmail.com', '2020-06-20'),
+(126, 'indexten@gmail.com', '2020-06-20'),
+(127, '22hakan@hotmail.com', '2020-06-20'),
+(128, 'dasdas@gmail.com', '2020-06-20'),
+(129, 'ahmet@hotmail.com', '2020-06-20'),
+(131, 'asda@gmail.com', '2020-06-20'),
+(132, 'indexten@gmail.com', '2020-06-20'),
+(133, '22hakan@hotmail.com', '2020-06-20'),
+(134, 'dasdas@gmail.com', '2020-06-20'),
+(135, 'ahmet@hotmail.com', '2020-06-20'),
+(137, 'asda@gmail.com', '2020-06-20'),
+(138, 'indexten@gmail.com', '2020-06-20'),
+(139, '22hakan@hotmail.com', '2020-06-20'),
+(140, 'dasdas@gmail.com', '2020-06-20'),
+(141, 'ahmet@hotmail.com', '2020-06-20'),
+(143, 'asda@gmail.com', '2020-06-20'),
+(144, 'indexten@gmail.com', '2020-06-20'),
+(145, '22hakan@hotmail.com', '2020-06-20'),
+(146, 'dasdas@gmail.com', '2020-06-20');
 
 -- --------------------------------------------------------
 
@@ -276,7 +391,8 @@ CREATE TABLE IF NOT EXISTS `siparisler` (
   `toplamfiyat` int(11) NOT NULL,
   `kargodurum` int(11) NOT NULL DEFAULT 0,
   `odemeturu` varchar(10) COLLATE utf8_turkish_ci NOT NULL,
-  `tarih` varchar(10) COLLATE utf8_turkish_ci NOT NULL,
+  `durum` int(11) NOT NULL,
+  `tarih` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
@@ -284,32 +400,12 @@ CREATE TABLE IF NOT EXISTS `siparisler` (
 -- Tablo döküm verisi `siparisler`
 --
 
-INSERT INTO `siparisler` (`id`, `siparis_no`, `adresid`, `uyeid`, `urunad`, `urunadet`, `urunfiyat`, `toplamfiyat`, `kargodurum`, `odemeturu`, `tarih`) VALUES
-(34, 92552904, 11, 12, 'Y MODEL', 3, 169, 507, 1, 'Nakit', '14.06.2019'),
-(32, 13290820, 1, 10, 'Tahta', 3, 169, 507, 2, 'Nakit', '11.06.2019'),
-(31, 13290820, 1, 10, 'Işıklı', 3, 140, 420, 2, 'Nakit', '11.06.2019'),
-(30, 13290820, 1, 10, 'X MODEL', 3, 147, 441, 2, 'Nakit', '11.06.2019'),
-(29, 18408288, 1, 13, 'Normal', 3, 90, 270, 1, 'Nakit', '11.06.2019'),
-(33, 92552904, 11, 12, 'Çamaşır-1', 3, 90, 270, 1, 'Nakit', '14.06.2019'),
-(28, 18408288, 1, 13, 'Kot Pantolon', 2, 90, 180, 1, 'Nakit', '11.06.2019'),
-(35, 12833544, 11, 16, 'Beyaz Tişört', 1, 380, 380, 0, 'Nakit', '18.05.2020'),
-(36, 99503320, 21, 18, 'Sarı Tişört', 1, 270, 270, 0, 'Nakit', '31.05.2020'),
-(37, 99503320, 21, 18, 'Benekli', 1, 169, 169, 0, 'Nakit', '31.05.2020'),
-(38, 33303032, 20, 16, 'Y MODEL', 3, 169, 507, 0, 'Nakit', '03.06.2020'),
-(39, 33303032, 20, 16, '3-6 Yaş', 3, 169, 507, 0, 'Nakit', '03.06.2020'),
-(40, 73251843, 11, 16, 'Y MODEL', 3, 169, 507, 0, 'Nakit', '03.06.2020'),
-(41, 73251843, 11, 16, '3-6 Yaş', 3, 169, 507, 0, 'Nakit', '03.06.2020'),
-(42, 17590126, 20, 16, 'Y MODEL', 3, 169, 507, 0, 'Nakit', '04.06.2020'),
-(43, 17590126, 20, 16, '3-6 Yaş', 3, 169, 507, 0, 'Nakit', '04.06.2020'),
-(44, 99291309, 20, 16, 'Sarı Tişört', 1, 270, 270, 0, 'Nakit', '04.06.2020'),
-(45, 13867105, 20, 16, 'Nike-Beyaz', 1, 147, 147, 0, 'Nakit', '04.06.2020'),
-(46, 68818789, 20, 16, 'Kot Pantolon', 1, 90, 90, 0, 'Nakit', '04.06.2020'),
-(47, 68818789, 20, 16, 'Normal', 1, 90, 90, 0, 'Nakit', '04.06.2020'),
-(48, 78777547, 11, 16, 'Yazlık Gömlek', 1, 270, 270, 0, 'Nakit', '04.06.2020'),
-(49, 94219847, 22, 21, 'Sarı Tişört', 1, 270, 270, 0, 'Nakit', '04.06.2020'),
-(50, 94219847, 22, 21, 'Kırmızı Atlet', 2, 90, 180, 0, 'Nakit', '04.06.2020'),
-(51, 98006076, 22, 21, 'Tahta', 1, 169, 169, 0, 'Nakit', '04.06.2020'),
-(52, 42782722, 22, 21, 'Beyaz Tişört', 3, 380, 1140, 0, 'Nakit', '08.06.2020');
+INSERT INTO `siparisler` (`id`, `siparis_no`, `adresid`, `uyeid`, `urunad`, `urunadet`, `urunfiyat`, `toplamfiyat`, `kargodurum`, `odemeturu`, `durum`, `tarih`) VALUES
+(32, 13290820, 1, 10, 'Tahta', 3, 169, 507, 2, 'Nakit', 0, '2020-06-18 23:57:25'),
+(31, 13290820, 1, 10, 'Işıklı', 3, 140, 420, 2, 'Nakit', 0, '2020-06-18 23:57:25'),
+(30, 13290820, 1, 10, 'X MODEL', 3, 147, 441, 2, 'Nakit', 0, '2020-06-18 23:57:25'),
+(36, 99503320, 21, 18, 'Sarı Tişört', 1, 270, 270, 0, 'Nakit', 0, '2020-06-18 23:57:25'),
+(37, 99503320, 21, 18, 'Benekli', 1, 169, 169, 0, 'Nakit', 0, '2020-06-18 23:57:25');
 
 -- --------------------------------------------------------
 
@@ -326,29 +422,15 @@ CREATE TABLE IF NOT EXISTS `teslimatbilgileri` (
   `mail` varchar(20) COLLATE utf8_turkish_ci NOT NULL,
   `telefon` varchar(20) COLLATE utf8_turkish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Tablo döküm verisi `teslimatbilgileri`
 --
 
 INSERT INTO `teslimatbilgileri` (`id`, `siparis_no`, `ad`, `soyad`, `mail`, `telefon`) VALUES
-(1, 17131105, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(2, 78669138, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(3, 45747779, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(4, 89026050, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(5, 41370623, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(6, 55902761, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(7, 55155696, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(8, 70407290, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(9, 79279869, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(10, 18408288, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
 (11, 13290820, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', '0555178786'),
-(12, 92552904, 'dilek', 'kal', 'dilek@hotmail.com', '55522211122'),
-(13, 99503320, 'ayse', 'fatma', 'fatma@hotmail.com', '35245226'),
-(14, 94219847, 'tuğberk', 'ulucan', 'tugberk@ulucan.net', '5544120133'),
-(15, 98006076, 'tuğberk', 'ulucan', 'tugberk@ulucan.net', '5544120133'),
-(16, 42782722, 'tuğberk', 'ulucan', 'tugberk@ulucan.net', '5544120133');
+(13, 99503320, 'ayse', 'fatma', 'fatma@hotmail.com', '35245226');
 
 -- --------------------------------------------------------
 
@@ -377,19 +459,18 @@ CREATE TABLE IF NOT EXISTS `urunler` (
   `ekstraBilgi` text COLLATE utf8_turkish_ci NOT NULL,
   `satisadet` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=84 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Tablo döküm verisi `urunler`
 --
 
 INSERT INTO `urunler` (`id`, `ana_kat_id`, `cocuk_kat_id`, `katid`, `urunad`, `res1`, `res2`, `res3`, `durum`, `aciklama`, `kumas`, `urtYeri`, `renk`, `fiyat`, `stok`, `ozellik`, `ekstraBilgi`, `satisadet`) VALUES
-(1, 1, 1, 1, 'Beyaz Tişört', '1.png', '2.png', '3.png', 2, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Beyaz', 380, 9997, 'Beyaz Tişört için özellikler', 'Beyaz Tişört için ekstra bilgi', 10),
-(2, 1, 1, 1, 'Sarı Tişört', '4.png', '5.png', '6.png', 2, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Keten', 'Uganda', 'Sarı', 270, 10000, 'Sarı Tişört için özellikler', 'Sarı Tişört için ekstra bilgi', 2),
-(3, 1, 1, 2, 'Kumaş Pantolon', '7.png', '8.png', '9.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Likra', 'Afrika', 'pembe', 140, 10000, 'Pembe Tişört için özellikler', 'Pembe Tişört için ekstra bilgi', 5),
-(4, 1, 1, 2, 'Kot Pantolon', '10.png', '11.png', '12.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Saten', 'Kamboçya', 'Sarı', 90, 100, 'Kırmızı Tişört için özellikler', 'Kırmızı Tişört için ekstra bilgi', 8),
-(5, 1, 1, 3, 'Keten Ceket', '13.png', '14.png', '15.png', 2, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Gri', 147, 190, 'Gri Tişört için özellikler', 'Gri Tişört için ekstra bilgi', 9),
-(6, 1, 1, 3, 'Kumaş Ceket', '16.png', '17.png', '18.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Keten', 'Uganda', 'Mavi', 169, 10000, 'Mavi Tişört için özellikler', 'Mavi Tişört için ekstra bilgi', 0),
+(2, 1, 1, 1, 'Sarı Tişört', '4.png', '5.png', '6.png', 2, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Keten', 'Uganda', 'Sarı', 270, 9998, 'Sarı Tişört için özellikler', 'Sarı Tişört için ekstra bilgi', 2),
+(3, 1, 1, 2, 'Kumaş Pantolon', '7.png', '8.png', '9.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Likra', 'Afrika', 'pembe', 140, 9999, 'Pembe Tişört için özellikler', 'Pembe Tişört için ekstra bilgi', 5),
+(4, 1, 1, 2, 'Kot Pantolon', '10.png', '11.png', '12.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Saten', 'Kamboçya', 'Sarı', 90, 99, 'Kırmızı Tişört için özellikler', 'Kırmızı Tişört için ekstra bilgi', 8),
+(5, 1, 1, 3, 'Keten Ceket', '13.png', '14.png', '15.png', 2, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Gri', 147, 187, 'Gri Tişört için özellikler', 'Gri Tişört için ekstra bilgi', 9),
+(6, 1, 1, 3, 'Kumaş Ceket', '16.png', '17.png', '18.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Keten', 'Uganda', 'Mavi', 169, 9997, 'Mavi Tişört için özellikler', 'Mavi Tişört için ekstra bilgi', 0),
 (9, 1, 3, 9, 'Mor Tişört', 'p9.jpg', 'l1.jpg', 'p9.jpg', 1, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Saten', 'Kamboçya', 'Mor', 157, 10000, 'Mor Tişört için özellikler', 'Mor Tişört için ekstra bilgi', 0),
 (10, 1, 1, 4, 'Keten Gömlek', '19.png', '20.png', '21.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Beyaz', 380, 10000, 'Beyaz Tişört için özellikler', 'Beyaz Tişört için ekstra bilgi', 0),
 (11, 1, 1, 4, 'Yazlık Gömlek', '22.png', '23.png', '24.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Keten', 'Uganda', 'Sarı', 270, 10000, 'Sarı Tişört için özellikler', 'Sarı Tişört için ekstra bilgi', 0),
@@ -416,7 +497,7 @@ INSERT INTO `urunler` (`id`, `ana_kat_id`, `cocuk_kat_id`, `katid`, `urunad`, `r
 (32, 2, 6, 17, 'Yerli Üretim', '85.png', '86.png', '87.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Gri', 147, 190, 'Gri Tişört için özellikler', 'Gri Tişört için ekstra bilgi', 0),
 (33, 2, 6, 17, 'İthal', '88.png', '89.png', '90.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Keten', 'Uganda', 'Mavi', 169, 10000, 'Mavi Tişört için özellikler', 'Mavi Tişört için ekstra bilgi', 0),
 (34, 3, 7, 18, 'Mavi', '91.png', '92.png', '93.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Gri', 147, 190, 'Gri Tişört için özellikler', 'Gri Tişört için ekstra bilgi', 0),
-(35, 3, 7, 18, 'Kırmızı', '94.png', '95.png', '96.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Keten', 'Uganda', 'Mavi', 169, 10000, 'Mavi Tişört için özellikler', 'Mavi Tişört için ekstra bilgi', 0),
+(35, 3, 7, 18, 'Kırmızı', '94.png', '95.png', '96.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Keten', 'Uganda', 'Mavi', 169, 9999, 'Mavi Tişört için özellikler', 'Mavi Tişört için ekstra bilgi', 0),
 (36, 3, 7, 19, 'Işıklı', '97.png', '98.png', '99.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Likra', 'Afrika', 'pembe', 140, 10000, 'Pembe Tişört için özellikler', 'Pembe Tişört için ekstra bilgi', 0),
 (37, 3, 7, 19, 'Normal', '100.png', '101.png', '102.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Saten', 'Kamboçya', 'Sarı', 90, 10000, 'Kırmızı Tişört için özellikler', 'Kırmızı Tişört için ekstra bilgi', 0),
 (38, 3, 7, 20, '0-3 Yaş', '103.png', '104.png', '105.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Gri', 147, 190, 'Gri Tişört için özellikler', 'Gri Tişört için ekstra bilgi', 0),
@@ -431,7 +512,10 @@ INSERT INTO `urunler` (`id`, `ana_kat_id`, `cocuk_kat_id`, `katid`, `urunad`, `r
 (47, 3, 9, 24, 'Pamuklu', '130.png', '131.png', '132.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Saten', 'Kamboçya', 'Sarı', 90, 10000, 'Kırmızı Tişört için özellikler', 'Kırmızı Tişört için ekstra bilgi', 0),
 (48, 3, 9, 25, 'Polo', '133.png', '134.png', '135.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Gri', 147, 190, 'Gri Tişört için özellikler', 'Gri Tişört için ekstra bilgi', 0),
 (49, 3, 9, 25, 'Pamuk', '136.png', '137.png', '138.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Keten', 'Uganda', 'Mavi', 169, 10000, 'Mavi Tişört için özellikler', 'Mavi Tişört için ekstra bilgi', 0),
-(50, 2, 2, 24, 'Kot Pantolon', '139.png', '140.png', '141.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Gri', 147, 190, 'Gri Tişört için özellikler', 'Gri Tişört için ekstra bilgi', 0);
+(50, 2, 2, 24, 'Kot Pantolon', '139.png', '140.png', '141.png', 0, 'ÜRÜN HAKKINDA AÇIKLAMA=Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo\r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever', 'Pamuk', 'Çin', 'Gri', 147, 190, 'Gri Tişört için özellikler', 'Gri Tişört için ekstra bilgi', 0),
+(83, 2, 5, 13, 'Xml timsah derisi', 'icerires7.png', 'icerires8.png', 'icerires9.png', 0, 'Xml ürün 3 açıklamasıdı', 'timsah', 'Kamboçya', 'kahverengi', 88.9, 10, 'timsah derisi çanta ekstra bilgi 3', 'ekstra bilgi 3', 0),
+(82, 3, 8, 21, 'Xml oyuncak araba', 'icerires4.png', 'icerires5.png', 'icerires6.png', 0, 'Xml ürün 2 açıklamasıdı', 'Keten', 'Zambiya', 'beyaz', 5.9, 1250, 'uzaktan kumandalı ekstra bilgi 2', 'ekstra bilgi 2', 0),
+(81, 1, 2, 6, 'Xml içlik', 'icerires1.png', 'icerires2.png', 'icerires3.png', 0, 'Xml ürün 1 açıklamasıdı', 'Keten', 'Zambiya', 'beyaz', 10.9, 246, 'gayet ferah ekstra bilgi 1', 'ekstra bilgi 1', 0);
 
 -- --------------------------------------------------------
 
@@ -449,7 +533,7 @@ CREATE TABLE IF NOT EXISTS `uye_panel` (
   `telefon` varchar(20) COLLATE utf8_turkish_ci NOT NULL,
   `durum` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Tablo döküm verisi `uye_panel`
@@ -459,10 +543,9 @@ INSERT INTO `uye_panel` (`id`, `ad`, `soyad`, `mail`, `sifre`, `telefon`, `durum
 (18, 'ayse', 'fatma', 'fatma@hotmail.com', 'q5ijvc1oY5DRFhOD8E1sDPw/mXIA', '35245226', 1),
 (17, 'dilek', 'dilek', 'dilek@gmail.com', 'q5ijvc1oW5CRiVHYJjYG3kQmAwA=', '5321521212', 1),
 (10, 'olcay', 'Kalyon', 'olcayrewr@gmail.com', 'q5ijvc1oU5CRUcAmNgZuecbfAA==', '0555178786', 0),
-(19, 'ayse', 'fatma', 'fatma@hotmail.com', 'q5ijvc1oY5DRFhOD8E1sDPw/mXIA', '35245226', 1),
-(16, 'hande', 'meşeli', 'hande.meseli@ogr.dpu.edu.tr', 'q5ijvc1oY5DRFhOD8E1sDPw/mXIA', '5342938182', 1),
-(20, 'sena', 'karaaslan', 'senakrsln44@gmail.com', 'q5ijvc1oY5CRiZFZ4CY2Bv6bTKkA', '05555474142', 1),
-(21, 'tuğberk', 'ulucan', 'tugberk@ulucan.net', 'q5ijvc1oW5CRiVHYJjYG3kQmAwA=', '5544120133', 1);
+(16, 'hande', 'meşeli', 'hande.meseli@meseli.com', 'q5ijvc1oY5DRFhOD8E1sDPw/mXIA', '534293818212', 1),
+(20, 'sena', 'karaaslan', 'senakrsln44@karaaslan.com', 'q5ijvc1oY5CRiZFZ4CY2Bv6bTKkA', '555547414213', 1),
+(23, 'tuğberk', 'ulucan', 'tugberk@ulucan.net', 'q5ijvc1oY5DRFhODsE1sDPxvmTIA', '554412013314', 1);
 
 -- --------------------------------------------------------
 

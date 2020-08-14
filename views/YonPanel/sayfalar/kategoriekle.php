@@ -64,7 +64,7 @@
              
              			<div class="row bg-gradient-beyazimsi">
              
-             		<div class="col-lg-12 col-md-12 col-sm-12 bg-gradient-mvc pt-2 basliktext2"><h3>Kategori Güncelle</h3></div>
+             		<div class="col-lg-12 col-md-12 col-sm-12 bg-gradient-mvc pt-2 basliktext2"><h3>Kategori Ekle</h3></div>
                 <div class="col-lg-12 col-md-12 col-sm-12 formeleman">Kategori Adı</div>    
                    	 <?php 	
 					 

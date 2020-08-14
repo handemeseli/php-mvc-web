@@ -45,7 +45,6 @@ class uye_model extends Model {
 	
 
 
-	
 	function TopluislemBaslat() {		
 	return $this->db->beginTransaction();	
 		
@@ -60,6 +59,7 @@ class uye_model extends Model {
 	return $this->db->siparisTamamla($veriler);
 		
 	} // SİPARİŞ TAMAMLAMA
+	
 	function tekliveri($sutun,$kosul) {
 		
 		return $this->db->teklistele($sutun,$kosul);

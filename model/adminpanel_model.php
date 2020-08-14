@@ -56,6 +56,10 @@ class adminpanel_model extends Model {
 		return $this->db->Ekle($tabloisim,$sutunlar,$veriler);
 	}
 	
+	function TopluEkleme($tabloisim,$sutunlar,$veriler) {		
+		return $this->db->topluEkle($tabloisim,$sutunlar,$veriler);
+	}
+	
 	function GirisKontrol($tabloisim,$kosul) {
 		
 		return $this->db->giriskontrol($tabloisim,$kosul);		

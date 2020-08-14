@@ -350,8 +350,8 @@ Cookie::SepeteEkle($this->form->get("id")->bosmu(),$this->form->get("adet")->bos
 <div class="col-lg-3 col-xl-3 col-md-3 text-dark kalinyap p-2">'.$deger["urunad"].'</div>
 <div class="col-lg-3 col-xl-3 col-md-3 text-dark kalinyap p-2">'.$deger["urunadet"].'</div>
 <div class="col-lg-3 col-xl-3 col-md-3 text-dark kalinyap p-2">
-'.number_format($deger["urunfiyat"],2,",",".").' TL</div>
-<div class="col-lg-3 col-xl-3 col-md-3 text-dark kalinyap p-2">'.number_format($deger["toplamfiyat"],2,",",".").' TL</div>             
+'.number_format($deger["urunfiyat"],2,",",".").' </div>
+<div class="col-lg-3 col-xl-3 col-md-3 text-dark kalinyap p-2">'.number_format($deger["toplamfiyat"],2,",",".").' </div>             
            </div> ';
 	$toplam[]=$deger["toplamfiyat"];	
 	endforeach;
@@ -367,7 +367,7 @@ Cookie::SepeteEkle($this->form->get("id")->bosmu(),$this->form->get("adet")->bos
                     <div class="col-lg-12  geneltext2 text-right kalinyap p-2 border-bottom border-secondary"><span >SİPARİŞ TOPLAMI
 					
 					<?php
-					print_r(number_format(array_sum($toplam),2,",","."). " TL");
+					print_r(number_format(array_sum($toplam),2,",","."). " ₺");
 					
 					 ?></span></div>        
                         

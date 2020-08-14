@@ -2,19 +2,17 @@
 
 class Upload   {
 	
-		public $inputname,$uploadlimit;
-		public $error=array(),$izinverilenuzanti=array(),$yuklenenler=array();
+	public $inputname,$uploadlimit;
+	public $error=array(),$izinverilenuzanti=array(),$yuklenenler=array();
 		
-		
-		function __construct() {
-		 include 'config/Upload.php';
-		 $this->uploadlimit=$UploadConfig["UploadLimit"];				
-		 $this->izinverilenuzanti=$UploadConfig["izinverilenUzanti"];	
+	function __construct() {
+		include 'config/Upload.php';
+		$this->uploadlimit=$UploadConfig["UploadLimit"];				
+		$this->izinverilenuzanti=$UploadConfig["izinverilenUzanti"];
+		$this->ZipizinverilenUzanti=$UploadConfig["ZipizinverilenUzanti"];
 		}
 		
-		
-		
-		function UploadResimYeniEkleme($name,$sayi) {
+	function UploadResimYeniEkleme($name,$sayi) {
 			
 			$this->inputname=$name; // bunun amacı bu classtaki diğer fonksiyonlara bilgi
 			
@@ -57,8 +55,7 @@ class Upload   {
 			
 		}
 		
-		
-		function uploadPostAl ($key) {
+	function uploadPostAl ($key) {
 			
 			if (!empty($_FILES[$key]["name"])):
 			
@@ -74,9 +71,7 @@ class Upload   {
 			
 		}
 		
-		
-		
-			function UploadDosyaKontrol($name) {
+	function UploadDosyaKontrol($name) {
 			$this->inputname=$name;
 			
 			
@@ -111,10 +106,7 @@ class Upload   {
 			
 		}
 		
-		
-		
-		
-		function Boyutbak ($dizidegeri=false,$sayi=false,$guncel=false)  {	
+	function Boyutbak ($dizidegeri=false,$sayi=false,$guncel=false)  {	
 		
 		if ($guncel) :
 		
@@ -145,7 +137,7 @@ class Upload   {
 		
 		}
 		
-		function Uzantibak ($dizidegeri=false,$sayi=false,$guncel=false)  {	
+	function Uzantibak ($dizidegeri=false,$sayi=false,$guncel=false)  {	
 		
 		
 			if ($guncel) :
@@ -169,15 +161,8 @@ class Upload   {
 		
 		endif;
 		}
-		
-		
-		
-		 
 	
-		
-		
-		
-		function Yukle ($name=false,$guncel=false)  {			
+	function Yukle ($name=false,$guncel=false)  {			
 			
 				if (empty($this->error)) :
 				
@@ -245,13 +230,37 @@ class Upload   {
 		
 			
 		}
-
-		
-
-
+	
+	function xmlzipresimyukleme($name) {
+		$dosyaadi=$_FILES[$name]["name"];
+		$tur=$_FILES[$name]["type"];
+		$yuklemeyeri=RESİMYOL.$dosyaadi;
+		$isim=explode(".",$dosyaadi);			
+		if (end($isim)!="zip"):
+			$this->error[]="İzin verilmeyen uzantı";
+		else:
+			if (!in_array($tur,$this->ZipizinverilenUzanti)) :
+				$this->error[]="Dosya türü hatası";
+			else:
+				return $yuklemeyeri;
+			endif;
+		endif;
+	}
+	
+	function ZipResimYuklemeSon ($name,$yuklemeyeri) {
+		$kaynak=$_FILES[$name]["tmp_name"];
+		move_uploaded_file($kaynak,$yuklemeyeri);
+		$zip = new ZipArchive();
+		$dosyam=$zip->open($yuklemeyeri);
+		if ($dosyam === true):
+			$zip->extractTo(RESİMYOL);
+			$zip->close();
+			unlink($yuklemeyeri);
+		else:
+			$this->error[]="Dosya açılmadı";
+		endif;
+	}
 }
-
-
 
 
 ?>

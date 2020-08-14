@@ -1,6 +1,50 @@
 
 $(document).ready(function(e) {
 	
+	$('#topluurunsilbtn').click(function() {
+		
+	var elemanlar=$(":checkbox:checked");
+	var idler="";
+	//var idlerimiz=[];	
+		
+		elemanlar.each(function() {		
+
+			idler +=$(this).val()+",";
+		
+		
+		});		
+
+$.post("http://localhost/PROJELER/mvcproje/GenelGorev/uruntoplusilme",{"idler":idler},function() {		
+
+				var anaiskelet=$(":checkbox:checked").parents('#uruncerceve');
+				anaiskelet.css("background","black");
+				anaiskelet.fadeOut("slow",function() {
+				
+				window.location.href="http://localhost/PROJELER/mvcproje/panel/urunler/";
+				
+				
+				});
+
+
+			});	
+
+			
+		});	
+			
+$('input[type="checkbox"][name="anacheck"]').click(function() {
+		
+			if (this.checked) {
+				$('body input[type="checkbox"]').attr("checked",true);
+			
+			}
+			else {
+				$('body input[type="checkbox"]').attr("checked",false);	
+			
+			}	
+
+
+		});
+	
 	$('#toplusilbtn').click(function() {	
 		var elemanlar=$(":checkbox:checked");
 		var idler="";

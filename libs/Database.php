@@ -41,6 +41,16 @@ parent::__construct('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8',DB_
 		
 	} // ekleme 
 	
+	function topluEkle($tabloisim,$sutunadlari,$sonVal) {					
+		$sonhal=join (",",$sutunadlari);
+		$sorgu=$this->prepare('insert into '.$tabloisim.' ('.$sonhal.') VALUES '.$sonVal);		
+		if ($sorgu->execute()) : 
+			return true;	
+		else:		
+			return false;		
+		endif;		
+	} // toplu ekleme 
+	
 	function listele($tabloisim,$kosul=false) {
 		
 		

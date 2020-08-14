@@ -33,7 +33,7 @@
 			
             endif; ?><br />Ödenecek Tutar : 
             <?php   if (isset($veri["toplamtutar"])) :			
-			echo number_format($veri["toplamtutar"],2,',','.')." TL";		
+			echo number_format($veri["toplamtutar"],2,',','.')." ₺";		
 			
             endif; ?>
             
